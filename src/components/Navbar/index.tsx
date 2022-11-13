@@ -2,6 +2,11 @@ import { Link } from 'react-router-dom';
 
 import {
     UncontrolledCollapse,
+    UncontrolledDropdown,
+    UncontrolledTooltip,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
     Col,
     Container,
     Nav,
@@ -47,24 +52,55 @@ const Navbar = () => {
                             </div>
 
                             <Nav
+                                className='navbar-nav-hover align-items-lg-center'
+                                navbar
+                            >
+                                <UncontrolledDropdown nav>
+                                    <DropdownToggle nav>
+                                        <i className='ni ni-collection d-lg-none mr-1' />
+                                        <span className='nav-link-inner--text'>
+                                            Categories
+                                        </span>
+                                    </DropdownToggle>
+                                    <DropdownMenu>
+                                        <DropdownItem to='/clothes' tag={Link}>
+                                            Clothes
+                                        </DropdownItem>
+                                        <DropdownItem
+                                            to='/furnitures'
+                                            tag={Link}
+                                        >
+                                            Furnitures
+                                        </DropdownItem>
+                                        <DropdownItem
+                                            to='/household'
+                                            tag={Link}
+                                        >
+                                            Household
+                                        </DropdownItem>
+                                    </DropdownMenu>
+                                </UncontrolledDropdown>
+                            </Nav>
+
+                            <Nav
                                 className='align-items-lg-center ml-lg-auto'
                                 navbar
                             >
                                 <NavItem>
-                                    <NavLink className='nav-link-icon'>
+                                    <NavLink
+                                        className='nav-link-icon'
+                                        id='tooltip333589074'
+                                    >
                                         <i className='fa fa-user' />
-                                        <span className='nav-link-inner--text ml-2'>
-                                            Sign In
+                                        <span className='nav-link-inner--text d-lg-none ml-2'>
+                                            Account
                                         </span>
-                                    </NavLink>
-                                </NavItem>
-
-                                <NavItem>
-                                    <NavLink className='nav-link-icon'>
-                                        <i className='fa fa-user' />
-                                        <span className='nav-link-inner--text ml-2'>
-                                            Sign Up
-                                        </span>
+                                        <UncontrolledTooltip
+                                            delay={0}
+                                            target='tooltip333589074'
+                                        >
+                                            Account
+                                        </UncontrolledTooltip>
                                     </NavLink>
                                 </NavItem>
                             </Nav>

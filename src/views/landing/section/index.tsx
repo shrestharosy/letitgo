@@ -21,6 +21,7 @@ const Section = () => {
                                 <img
                                     alt='...'
                                     className='img-fluid rounded shadow'
+                                    style={{ maxHeight: '100%' }}
                                     src={
                                         imageUrl[
                                             Math.floor(Math.random() * (3 + 1))
