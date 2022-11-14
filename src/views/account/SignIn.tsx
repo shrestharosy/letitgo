@@ -22,7 +22,7 @@ interface ISignInFormValues {
     password: string;
 }
 
-const Account = () => {
+const SignIn = () => {
     const { ...methods } = useForm({
         resolver: yupResolver(signInSchema),
     });
@@ -125,4 +125,4 @@ const Account = () => {
     );
 };
 
-export default Account;
+export default SignIn;

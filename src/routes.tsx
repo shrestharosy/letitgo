@@ -1,9 +1,9 @@
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import Landing from 'src/views/landing';
 import { PAGE_URLS } from './constants/route';
-import SignIn from './views/account/SignIn';
-import SignUp from './views/account/SignUp';
+import LandingPage from './routes/landing';
+import SignInPage from './routes/signin';
+import SignUpPage from './routes/signup';
 
 function Routes() {
     return (
@@ -12,17 +12,17 @@ function Routes() {
                 <Route
                     path={PAGE_URLS.SIGN_IN}
                     exact
-                    render={() => <SignIn />}
+                    render={() => <SignInPage />}
                 />
                 <Route
                     path={PAGE_URLS.SIGN_UP}
                     exact
-                    render={() => <SignUp />}
+                    render={() => <SignUpPage />}
                 />
                 <Route
                     path={PAGE_URLS.HOME}
                     exact
-                    render={(props) => <Landing {...props} />}
+                    render={(props) => <LandingPage {...props} />}
                 />
                 <Redirect to={PAGE_URLS.HOME} />
             </Switch>

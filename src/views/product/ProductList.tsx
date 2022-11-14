@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
+import { PAGE_URLS } from 'src/constants/route';
 import { productService } from 'src/service/product';
 import { IProduct } from 'src/service/product/product.type';
 
-const Section = () => {
+const ProductList = () => {
     const [products, setProducts] = useState<Array<IProduct>>([]);
 
-    useEffect(() => {
+    const { push } = useHistory();
+
+    const {} = useEffect(() => {
         getProducts();
     }, []);
 
@@ -21,11 +25,19 @@ const Section = () => {
 
     return (
         <section className='section section-lg'>
-            <div className='pl-6 pr-6'>
+            <div className={'card'}>
                 <Row className='justify-content-center'>
                     {products.map((product) => (
-                        <Col lg={3} md={3} sm={4} className={'mt-5'}>
-                            <div style={{ height: '350px', width: '350px' }}>
+                        <Col
+                            lg={3}
+                            md={3}
+                            sm={4}
+                            className={'mt-5'}
+                            onClick={() =>
+                                push(`${PAGE_URLS.PRODUCT.HOME}/${product.id}`)
+                            }
+                        >
+                            <div className={'image'}>
                                 <img
                                     alt='...'
                                     className='img-fluid rounded'
@@ -47,4 +59,4 @@ const Section = () => {
     );
 };
 
-export default Section;
+export default ProductList;
