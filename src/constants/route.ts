@@ -1,3 +1,5 @@
 export const PAGE_URLS = {
-    SIGN_OUT: 'signout',
+    HOME: '/',
+    SIGN_OUT: '/signout',
+    SIGN_IN: '/signin',
 };

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import {
     UncontrolledCollapse,
@@ -12,10 +12,10 @@ import {
     Nav,
     Navbar as NB,
     NavbarBrand,
-    NavLink,
     NavItem,
     Row,
 } from 'reactstrap';
+import { PAGE_URLS } from 'src/constants/route';
 
 const Navbar = () => {
     return (
@@ -37,7 +37,9 @@ const Navbar = () => {
                             <div className='navbar-collapse-header'>
                                 <Row>
                                     <Col className='collapse-brand' xs='6'>
-                                        <Link to='/'>LET IT GO</Link>
+                                        <NavLink to={PAGE_URLS.HOME}>
+                                            LET IT GO
+                                        </NavLink>
                                     </Col>
                                     <Col className='collapse-close' xs='6'>
                                         <button
@@ -90,6 +92,7 @@ const Navbar = () => {
                                     <NavLink
                                         className='nav-link-icon'
                                         id='tooltip333589074'
+                                        to={PAGE_URLS.SIGN_IN}
                                     >
                                         <i className='fa fa-user' />
                                         <span className='nav-link-inner--text d-lg-none ml-2'>
