@@ -1,23 +1,38 @@
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import {
     Button,
     Card,
-    CardHeader,
     CardBody,
-    FormGroup,
-    Form,
-    Input,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup,
-    Container,
-    Row,
+    CardHeader,
     Col,
+    Container,
+    Form,
+    FormGroup,
+    Row,
 } from 'reactstrap';
+import CustomInput from 'src/components/Forms/CustomInput';
 import BlueBGWrapper from 'src/components/Wrappers/BlueBGWrapper';
 import { PAGE_URLS } from 'src/constants/route';
+import { yupResolver } from '@hookform/resolvers/yup';
+import signUpSchema from 'src/libs/validation-schemas/signup.schema';
+
+interface ISignUpFormValues {
+    username: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+}
 
 const SignUp = () => {
+    const { ...methods } = useForm({
+        resolver: yupResolver(signUpSchema),
+    });
+
+    const onSubmit: SubmitHandler<ISignUpFormValues> = async (data) => {
+        console.log(data);
+    };
+
     return (
         <BlueBGWrapper>
             <Container className='pt-lg-7'>
@@ -32,8 +47,6 @@ const SignUp = () => {
                                     <Button
                                         className='btn-neutral btn-icon ml-1'
                                         color='default'
-                                        href='#pablo'
-                                        onClick={(e) => e.preventDefault()}
                                     >
                                         <span className='btn-inner--icon mr-1'>
                                             <img
@@ -54,58 +67,55 @@ const SignUp = () => {
                                 <div className='text-center text-muted mb-4'>
                                     <small>Or sign up with credentials</small>
                                 </div>
-                                <Form role='form'>
-                                    <FormGroup>
-                                        <InputGroup className='input-group-alternative mb-3'>
-                                            <InputGroupAddon addonType='prepend'>
-                                                <InputGroupText>
-                                                    <i className='ni ni-hat-3' />
-                                                </InputGroupText>
-                                            </InputGroupAddon>
-                                            <Input
-                                                placeholder='Name'
-                                                type='text'
+                                <FormProvider {...methods}>
+                                    <Form role='form'>
+                                        <FormGroup>
+                                            <CustomInput
+                                                name={'username'}
+                                                placeholder={'Username'}
+                                                labelIcon={'ni-hat-3'}
                                             />
-                                        </InputGroup>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <InputGroup className='input-group-alternative mb-3'>
-                                            <InputGroupAddon addonType='prepend'>
-                                                <InputGroupText>
-                                                    <i className='ni ni-email-83' />
-                                                </InputGroupText>
-                                            </InputGroupAddon>
-                                            <Input
-                                                placeholder='Email'
-                                                type='email'
+                                        </FormGroup>
+                                        <FormGroup>
+                                            <CustomInput
+                                                name={'email'}
+                                                placeholder={'Email'}
+                                                labelIcon={'ni-email-83'}
                                             />
-                                        </InputGroup>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <InputGroup className='input-group-alternative'>
-                                            <InputGroupAddon addonType='prepend'>
-                                                <InputGroupText>
-                                                    <i className='ni ni-lock-circle-open' />
-                                                </InputGroupText>
-                                            </InputGroupAddon>
-                                            <Input
-                                                placeholder='Password'
-                                                type='password'
-                                                autoComplete='off'
+                                        </FormGroup>
+                                        <FormGroup>
+                                            <CustomInput
+                                                name={'password'}
+                                                placeholder={'Password'}
+                                                labelIcon={
+                                                    'ni-lock-circle-open'
+                                                }
                                             />
-                                        </InputGroup>
-                                    </FormGroup>
+                                        </FormGroup>
+                                        <FormGroup>
+                                            <CustomInput
+                                                name={'confirmPassword'}
+                                                placeholder={'Confirm Password'}
+                                                labelIcon={
+                                                    'ni-lock-circle-open'
+                                                }
+                                            />
+                                        </FormGroup>
 
-                                    <div className='text-center'>
-                                        <Button
-                                            className='mt-4'
-                                            color='primary'
-                                            type='button'
-                                        >
-                                            Create account
-                                        </Button>
-                                    </div>
-                                </Form>
+                                        <div className='text-center'>
+                                            <Button
+                                                className='mt-4'
+                                                color='primary'
+                                                type='button'
+                                                onClick={methods.handleSubmit(
+                                                    onSubmit
+                                                )}
+                                            >
+                                                Create account
+                                            </Button>
+                                        </div>
+                                    </Form>
+                                </FormProvider>
                             </CardBody>
                         </Card>
                         <Row className='mt-3'>
