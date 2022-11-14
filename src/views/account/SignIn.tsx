@@ -1,23 +1,35 @@
+import { yupResolver } from '@hookform/resolvers/yup';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import {
-    Container,
-    Row,
-    Col,
     Button,
     Card,
-    CardHeader,
     CardBody,
+    CardHeader,
+    Col,
+    Container,
     Form,
     FormGroup,
-    InputGroup,
-    InputGroupAddon,
-    Input,
-    InputGroupText,
+    Row,
 } from 'reactstrap';
+import CustomInput from 'src/components/Forms/CustomInput';
 import BlueBGWrapper from 'src/components/Wrappers/BlueBGWrapper';
 import { PAGE_URLS } from 'src/constants/route';
+import signInSchema from 'src/libs/validation-schemas/signin.schema';
+
+interface ISignInFormValues {
+    username: string;
+    password: string;
+}
 
 const Account = () => {
+    const { ...methods } = useForm({
+        resolver: yupResolver(signInSchema),
+    });
+
+    const onSubmit: SubmitHandler<ISignInFormValues> = async (data) => {
+        console.log(data);
+    };
     return (
         <BlueBGWrapper>
             <Container className='pt-lg-7'>
@@ -52,44 +64,39 @@ const Account = () => {
                                 <div className='text-center text-muted mb-4'>
                                     <small>Or sign in with credentials</small>
                                 </div>
-                                <Form role='form'>
-                                    <FormGroup className='mb-3'>
-                                        <InputGroup className='input-group-alternative'>
-                                            <InputGroupAddon addonType='prepend'>
-                                                <InputGroupText>
-                                                    <i className='ni ni-email-83' />
-                                                </InputGroupText>
-                                            </InputGroupAddon>
-                                            <Input
-                                                placeholder='Email'
-                                                type='email'
+                                <FormProvider {...methods}>
+                                    <Form role='form'>
+                                        <FormGroup>
+                                            <CustomInput
+                                                name={'username'}
+                                                placeholder={'Username'}
+                                                labelIcon={'ni-hat-3'}
                                             />
-                                        </InputGroup>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <InputGroup className='input-group-alternative'>
-                                            <InputGroupAddon addonType='prepend'>
-                                                <InputGroupText>
-                                                    <i className='ni ni-lock-circle-open' />
-                                                </InputGroupText>
-                                            </InputGroupAddon>
-                                            <Input
-                                                placeholder='Password'
-                                                type='password'
-                                                autoComplete='off'
+                                        </FormGroup>
+
+                                        <FormGroup>
+                                            <CustomInput
+                                                name={'password'}
+                                                placeholder={'Password'}
+                                                labelIcon={
+                                                    'ni-lock-circle-open'
+                                                }
                                             />
-                                        </InputGroup>
-                                    </FormGroup>
-                                    <div className='text-center'>
-                                        <Button
-                                            className='my-4'
-                                            color='primary'
-                                            type='button'
-                                        >
-                                            Sign in
-                                        </Button>
-                                    </div>
-                                </Form>
+                                        </FormGroup>
+                                        <div className='text-center'>
+                                            <Button
+                                                className='my-4'
+                                                color='primary'
+                                                type='button'
+                                                onClick={methods.handleSubmit(
+                                                    onSubmit
+                                                )}
+                                            >
+                                                Sign in
+                                            </Button>
+                                        </div>
+                                    </Form>
+                                </FormProvider>
                             </CardBody>
                         </Card>
                         <Row className='mt-3'>
