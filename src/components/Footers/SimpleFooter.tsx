@@ -5,7 +5,7 @@ class SimpleFooter extends React.Component {
     render() {
         return (
             <>
-                <footer className=' footer'>
+                <footer className='footer'>
                     <Container>
                         <Row className=' align-items-center justify-content-md-between'>
                             <Col md='6'>

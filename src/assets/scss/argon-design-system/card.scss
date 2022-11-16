@@ -1,12 +1,11 @@
-
 .card {
-  position: relative;
+    position: relative;
 
-  &.card-plain {
-    background: transparent;
-    box-shadow: none;
-    border: none;
-  }
+    &.card-plain {
+        background: transparent;
+        box-shadow: none;
+        border: none;
+    }
 }
 
 .profile-page {
@@ -21,7 +20,7 @@
                 max-width: 180px;
                 border-radius: $border-radius;
                 @extend .shadow;
-                transform: translate(-50%,-30%);
+                transform: translate(-50%, -30%);
                 position: absolute;
                 left: 50%;
                 transition: $transition-base;
@@ -35,7 +34,7 @@
         .card-profile-stats {
             padding: 1rem 0;
 
-            > div {
+            >div {
                 text-align: center;
                 margin-right: 1rem;
                 padding: .875rem;
@@ -49,6 +48,7 @@
                     font-weight: bold;
                     display: block;
                 }
+
                 .description {
                     font-size: .875rem;
                     color: $gray-500;
@@ -77,19 +77,19 @@
 // Card with blockquotes
 
 .card {
-  .card-blockquote {
-    padding: 2rem;
-    position: relative;
+    .card-blockquote {
+        padding: 2rem;
+        position: relative;
 
-    .svg-bg {
-        display: block;
-        width: 100%;
-        height: 95px;
-        position: absolute;
-        top: -94px;
-        left: 0;
+        .svg-bg {
+            display: block;
+            width: 100%;
+            height: 95px;
+            position: absolute;
+            top: -94px;
+            left: 0;
+        }
     }
-  }
 }
 
 // Animated cards

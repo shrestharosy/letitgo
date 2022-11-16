@@ -9,6 +9,14 @@ const fetchProducts = async () => {
     return response.data;
 };
 
+const fetchProduct = async (productId: string) => {
+    const response: AxiosResponse<IProduct> = await axiosInstance.get(
+        `/products/${productId}`
+    );
+    return response.data;
+};
+
 export const productService = {
     fetchProducts,
+    fetchProduct,
 };
