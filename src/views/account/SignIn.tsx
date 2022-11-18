@@ -3,7 +3,6 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import {
     Button,
-    Card,
     CardBody,
     CardHeader,
     Col,
@@ -35,7 +34,7 @@ const SignIn = () => {
             <Container className='pt-lg-7'>
                 <Row className='justify-content-center'>
                     <Col lg='5'>
-                        <Card className='bg-secondary shadow border-0'>
+                        <div className='bg-secondary shadow border-0'>
                             <CardHeader className='bg-white pb-5'>
                                 <div className='text-muted text-center mb-3'>
                                     <small>Sign in with</small>
@@ -81,6 +80,7 @@ const SignIn = () => {
                                                 labelIcon={
                                                     'ni-lock-circle-open'
                                                 }
+                                                type={'password'}
                                             />
                                         </FormGroup>
                                         <div className='text-center'>
@@ -98,7 +98,7 @@ const SignIn = () => {
                                     </Form>
                                 </FormProvider>
                             </CardBody>
-                        </Card>
+                        </div>
                         <Row className='mt-3'>
                             <Col xs='6'>
                                 <a

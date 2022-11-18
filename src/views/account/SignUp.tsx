@@ -2,7 +2,6 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import {
     Button,
-    Card,
     CardBody,
     CardHeader,
     Col,
@@ -16,8 +15,12 @@ import BlueBGWrapper from 'src/components/Wrappers/BlueBGWrapper';
 import { PAGE_URLS } from 'src/constants/route';
 import { yupResolver } from '@hookform/resolvers/yup';
 import signUpSchema from 'src/libs/validation-schemas/signup.schema';
+import { authService } from 'src/service/auth';
+import { useState } from 'react';
 
 interface ISignUpFormValues {
+    firstName: string;
+    lastName: string;
     username: string;
     email: string;
     password: string;
@@ -25,11 +28,22 @@ interface ISignUpFormValues {
 }
 
 const SignUp = () => {
+    const [isLoading, setIsLoading] = useState(false);
+
     const { ...methods } = useForm({
         resolver: yupResolver(signUpSchema),
     });
 
     const onSubmit: SubmitHandler<ISignUpFormValues> = async (data) => {
+        try {
+            setIsLoading(true);
+            await authService.signUp(data);
+            alert('Account created successfully');
+        } catch (error) {
+            alert(error);
+        } finally {
+            setIsLoading(false);
+        }
         console.log(data);
     };
 
@@ -38,7 +52,7 @@ const SignUp = () => {
             <Container className='pt-lg-7'>
                 <Row className='justify-content-center'>
                     <Col lg='5'>
-                        <Card className='bg-secondary shadow border-0'>
+                        <div className='bg-secondary shadow border-0'>
                             <CardHeader className='bg-white pb-5'>
                                 <div className='text-muted text-center mb-3'>
                                     <small>Sign up with</small>
@@ -71,6 +85,20 @@ const SignUp = () => {
                                     <Form role='form'>
                                         <FormGroup>
                                             <CustomInput
+                                                name={'firstName'}
+                                                placeholder={'First Name'}
+                                                labelIcon={'ni-hat-3'}
+                                            />
+                                        </FormGroup>
+                                        <FormGroup>
+                                            <CustomInput
+                                                name={'lastName'}
+                                                placeholder={'Last Name'}
+                                                labelIcon={'ni-hat-3'}
+                                            />
+                                        </FormGroup>
+                                        <FormGroup>
+                                            <CustomInput
                                                 name={'username'}
                                                 placeholder={'Username'}
                                                 labelIcon={'ni-hat-3'}
@@ -90,6 +118,7 @@ const SignUp = () => {
                                                 labelIcon={
                                                     'ni-lock-circle-open'
                                                 }
+                                                type={'password'}
                                             />
                                         </FormGroup>
                                         <FormGroup>
@@ -99,6 +128,7 @@ const SignUp = () => {
                                                 labelIcon={
                                                     'ni-lock-circle-open'
                                                 }
+                                                type={'password'}
                                             />
                                         </FormGroup>
 
@@ -107,6 +137,7 @@ const SignUp = () => {
                                                 className='mt-4'
                                                 color='primary'
                                                 type='button'
+                                                disabled={isLoading}
                                                 onClick={methods.handleSubmit(
                                                     onSubmit
                                                 )}
@@ -117,7 +148,7 @@ const SignUp = () => {
                                     </Form>
                                 </FormProvider>
                             </CardBody>
-                        </Card>
+                        </div>
                         <Row className='mt-3'>
                             <Col>
                                 <Link

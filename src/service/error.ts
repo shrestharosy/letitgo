@@ -5,7 +5,7 @@ interface IAxiosErrorData {
     statusCode: string;
     status: string;
     timestamp: string;
-    message: string;
+    detail: string;
     debugMessage: string;
 }
 
@@ -21,24 +21,24 @@ function parseClientError(error: AxiosResponse<IAxiosErrorData>): IParsedError {
     };
     if (error.status === 403) {
         if (
-            error.data.message.includes(
+            error.data.detail.includes(
                 'Unauthorized user or JWT Token Malformed'
             )
         ) {
             window.location.href = PAGE_URLS.SIGN_OUT;
         }
-        console.log(error.data.message);
+        console.log(error.data.detail);
         parsedError.message = `Uh oh. Please log out.`;
     } else if (error.status === 400) {
-        parsedError.message = error.data.message;
+        parsedError.message = error.data.detail;
     } else if (error.status === 401) {
         // auth.performLogout();
         window.location.href = PAGE_URLS.SIGN_OUT;
-        parsedError.message = error.data.message;
+        parsedError.message = error.data.detail;
     } else if (error.status === 404) {
-        parsedError.message = error.data.message;
+        parsedError.message = error.data.detail;
     } else if (error.status === 422) {
-        parsedError.message = error.data.message;
+        parsedError.message = error.data.detail;
     }
     return parsedError;
 }

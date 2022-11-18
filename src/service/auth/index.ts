@@ -1,0 +1,26 @@
+import { ISignUp, ISignUpResponse } from './auth.type';
+import { AxiosResponse } from 'axios';
+import axiosInstance from '../axios';
+
+const signUp = async (data: ISignUp) => {
+    const {
+        firstName: first_name,
+        lastName: last_name,
+        confirmPassword: confirm_password,
+        ...rest
+    } = data;
+    const response: AxiosResponse<ISignUpResponse> = await axiosInstance.post(
+        `auth/signup/`,
+        {
+            ...rest,
+            first_name,
+            last_name,
+            confirm_password,
+        }
+    );
+    return response.data;
+};
+
+export const authService = {
+    signUp,
+};

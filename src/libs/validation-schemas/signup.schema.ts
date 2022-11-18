@@ -1,6 +1,8 @@
 import * as yup from 'yup';
 
 const signUpSchema = yup.object().shape({
+    firstName: yup.string().required('Please enter first name'),
+    lastName: yup.string().required('Please enter last name'),
     username: yup.string().required('Please enter username'),
     email: yup
         .string()
