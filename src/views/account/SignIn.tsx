@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import {
@@ -15,6 +16,7 @@ import CustomInput from 'src/components/Forms/CustomInput';
 import BlueBGWrapper from 'src/components/Wrappers/BlueBGWrapper';
 import { PAGE_URLS } from 'src/constants/route';
 import signInSchema from 'src/libs/validation-schemas/signin.schema';
+import { authService } from 'src/service/auth';
 
 interface ISignInFormValues {
     username: string;
@@ -22,11 +24,22 @@ interface ISignInFormValues {
 }
 
 const SignIn = () => {
+    const [isLoading, setIsLoading] = useState(false);
+
     const { ...methods } = useForm({
         resolver: yupResolver(signInSchema),
     });
 
     const onSubmit: SubmitHandler<ISignInFormValues> = async (data) => {
+        try {
+            setIsLoading(true);
+            await authService.signIn(data);
+            alert('Login success');
+        } catch (error) {
+            alert(error.message);
+        } finally {
+            setIsLoading(false);
+        }
         console.log(data);
     };
     return (
@@ -88,6 +101,7 @@ const SignIn = () => {
                                                 className='my-4'
                                                 color='primary'
                                                 type='button'
+                                                disabled={isLoading}
                                                 onClick={methods.handleSubmit(
                                                     onSubmit
                                                 )}
