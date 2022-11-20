@@ -3,12 +3,20 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Button, Card, CardBody, Col, Form, FormGroup, Row } from 'reactstrap';
 import CustomInput from 'src/components/Forms/CustomInput';
 import signInSchema from 'src/libs/validation-schemas/signin.schema';
+import ImageUploader from 'react-images-upload';
+import { useState } from 'react';
 
 const Upload = () => {
+    const [localImage, setLocalImage] = useState(null);
+
     //TODO: WIP schema
     const { ...methods } = useForm({
         resolver: yupResolver(signInSchema),
     });
+
+    const onDrop = (picture) => {
+        setLocalImage(picture[picture.length - 1]);
+    };
 
     return (
         <div className={'card'}>
@@ -16,7 +24,10 @@ const Upload = () => {
                 <Col lg='8'>
                     <Card className='bg-gradient-secondary shadow'>
                         <CardBody className='p-lg-5'>
-                            <h4 className='mb-4'>Start letting it go</h4>
+                            <h4 className='mb-4'>
+                                Start adding items that you wanna sell or give
+                                away
+                            </h4>
                             <FormProvider {...methods}>
                                 <Form role='form'>
                                     <FormGroup>
@@ -39,6 +50,40 @@ const Upload = () => {
                                         />
                                     </FormGroup>
                                     <FormGroup>
+                                        <label htmlFor={'uploadPhoto'}>
+                                            {'Upload Photo'}
+                                        </label>
+                                        <ImageUploader
+                                            withIcon={true}
+                                            buttonText={
+                                                localImage
+                                                    ? 'Update Image'
+                                                    : 'Choose image'
+                                            }
+                                            onChange={onDrop}
+                                            imgExtension={['.jpg', '.png']}
+                                            maxFileSize={5242880}
+                                            label={
+                                                'Max file size: 5mb, accepted: jpg|png'
+                                            }
+                                        />
+
+                                        {localImage && (
+                                            <div className='card'>
+                                                <small className='d-block mt-4'>
+                                                    {localImage.name}
+                                                </small>
+                                                <img
+                                                    alt={''}
+                                                    src={URL.createObjectURL(
+                                                        localImage
+                                                    )}
+                                                    className={'image'}
+                                                />
+                                            </div>
+                                        )}
+                                    </FormGroup>
+                                    <FormGroup>
                                         <CustomInput
                                             label={'Category'}
                                             name={'category'}
@@ -48,12 +93,6 @@ const Upload = () => {
                                         <CustomInput
                                             label={'Price'}
                                             name={'price'}
-                                        />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <CustomInput
-                                            label={'Upload photos'}
-                                            name={'Photos'}
                                         />
                                     </FormGroup>
                                 </Form>
@@ -67,7 +106,7 @@ const Upload = () => {
                                     size='lg'
                                     type='button'
                                 >
-                                    Send Message
+                                    LET IT GO
                                 </Button>
                             </div>
                         </CardBody>
