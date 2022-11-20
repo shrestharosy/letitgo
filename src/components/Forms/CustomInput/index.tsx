@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import { InputGroup, Input, InputGroupAddon, InputGroupText } from 'reactstrap';
 
 import { useFormContext, UseControllerProps } from 'react-hook-form';
 
@@ -10,6 +10,7 @@ interface ICustomInputProps extends UseControllerProps {
     placeholder?: string;
     defaultValue?: string;
     type?: string;
+    label?: string;
 }
 
 const CustomInput = (props: ICustomInputProps) => {
@@ -17,14 +18,7 @@ const CustomInput = (props: ICustomInputProps) => {
 
     const { formState, register } = formContext;
 
-    const {
-        name,
-        labelIcon,
-        placeholder,
-        type = 'text',
-        rules,
-        defaultValue,
-    } = props;
+    const { name, labelIcon, placeholder, type = 'text', label } = props;
 
     // const { field } = useController({ name, rules, defaultValue });
 
@@ -32,13 +26,16 @@ const CustomInput = (props: ICustomInputProps) => {
 
     return (
         <>
+            {label && <label htmlFor={name}>{label}</label>}
             <InputGroup className='input-group-alternative mb-3'>
-                <InputGroupAddon addonType='prepend'>
-                    <InputGroupText>
-                        <i className={`ni ${labelIcon}`} />
-                    </InputGroupText>
-                </InputGroupAddon>
-                <input
+                {labelIcon && (
+                    <InputGroupAddon addonType='prepend'>
+                        <InputGroupText>
+                            <i className={`ni ${labelIcon}`} />
+                        </InputGroupText>
+                    </InputGroupAddon>
+                )}
+                <Input
                     className={`form-control ${
                         formState.errors[name] ? 'is-invalid' : ''
                     }`}
