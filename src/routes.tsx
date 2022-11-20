@@ -5,6 +5,7 @@ import LandingPage from './routes/landing';
 import ProductDetailPage from './routes/product';
 import SignInPage from './routes/signin';
 import SignUpPage from './routes/signup';
+import Upload from './routes/upload';
 
 interface IRoute {
     path: string;
@@ -29,6 +30,11 @@ const routes: Array<IRoute> = [
         component: <LandingPage />,
     },
     {
+        path: PAGE_URLS.USER.UPLOAD,
+        exact: true,
+        component: <Upload />,
+    },
+    {
         path: PAGE_URLS.PRODUCT.DETAIL,
         exact: true,
         component: <ProductDetailPage />,
@@ -41,6 +47,7 @@ function Routes() {
             <Switch>
                 {routes.map((route) => (
                     <Route
+                        key={route.path}
                         path={route.path}
                         exact={route.exact}
                         render={() => route.component}
