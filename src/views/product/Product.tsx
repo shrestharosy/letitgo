@@ -31,55 +31,52 @@ const Product = () => {
 
     return (
         <>
-            <section className='section section-lg section-shaped'>
-                <div className={'card'}>
-                    <Row
-                        className='justify-content-center'
-                        style={{ margin: '0 auto' }}
-                    >
-                        {isLoading && <MainLoader />}
-                        {!isLoading && product && (
-                            <>
-                                <Col id={product.id} className={'mt-5'}>
-                                    <div className={'product-image'}>
-                                        <img
-                                            alt='...'
-                                            className='img-fluid rounded'
-                                            style={{ maxHeight: '100%' }}
-                                            src={product.image}
-                                        />
-                                    </div>
-                                </Col>
-                                <Col lg={6} md={6} sm={4}>
-                                    <small className='d-block mt-4 product-title'>
-                                        {product.title}
-                                    </small>
-                                    <small className='d-block mt-2 product-price'>
-                                        {product.price
-                                            ? `$${product.price}`
-                                            : 'Free'}
-                                    </small>
-                                    <small className='d-block mt-3 product-label'>
-                                        Details
-                                    </small>
-                                    <small className='d-block mt-3 text-justify product-description'>
-                                        Far quitting dwelling graceful the
-                                        likewise received building. An fact so
-                                        to that show am shed sold cold.
-                                        Unaffected remarkably get yet introduced
-                                        excellence terminated led. Result either
-                                        design saw she esteem and. On ashamed no
-                                        inhabit ferrars it ye besides resolve.
-                                        Own judgment directly few trifling.
-                                        Elderly as pursuit at regular do
-                                        parlors. Rank what has into fond she.
-                                    </small>
-                                </Col>
-                            </>
-                        )}
-                    </Row>
-                </div>
-            </section>
+            <div className={'card'}>
+                <Row
+                    className='justify-content-center'
+                    style={{ margin: '0 auto' }}
+                >
+                    {isLoading && <MainLoader />}
+                    {!isLoading && product && (
+                        <>
+                            <Col id={product.id} className={'mt-5'}>
+                                <div className={'product-image'}>
+                                    <img
+                                        alt='...'
+                                        className='img-fluid rounded'
+                                        style={{ maxHeight: '100%' }}
+                                        src={product.image}
+                                    />
+                                </div>
+                            </Col>
+                            <Col lg={6} md={6} sm={4}>
+                                <small className='d-block mt-4 product-title'>
+                                    {product.title}
+                                </small>
+                                <small className='d-block mt-2 product-price'>
+                                    {product.price
+                                        ? `$${product.price}`
+                                        : 'Free'}
+                                </small>
+                                <small className='d-block mt-3 product-label'>
+                                    Details
+                                </small>
+                                <small className='d-block mt-3 text-justify product-description'>
+                                    Far quitting dwelling graceful the likewise
+                                    received building. An fact so to that show
+                                    am shed sold cold. Unaffected remarkably get
+                                    yet introduced excellence terminated led.
+                                    Result either design saw she esteem and. On
+                                    ashamed no inhabit ferrars it ye besides
+                                    resolve. Own judgment directly few trifling.
+                                    Elderly as pursuit at regular do parlors.
+                                    Rank what has into fond she.
+                                </small>
+                            </Col>
+                        </>
+                    )}
+                </Row>
+            </div>
         </>
     );
 };

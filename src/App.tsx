@@ -6,7 +6,9 @@ function App() {
     return (
         <>
             <Navbar />
-            <Routes />
+            <section className='section section-lg section-shaped'>
+                <Routes />
+            </section>
             <SimpleFooter />
         </>
     );
