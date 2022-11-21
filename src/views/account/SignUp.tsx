@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import {
     Button,
     CardBody,
@@ -13,6 +13,7 @@ import {
 } from 'reactstrap';
 import CustomInput from 'src/components/Forms/CustomInput';
 import { PAGE_URLS } from 'src/constants/route';
+import { useNotify } from 'src/context/notify';
 import signUpSchema from 'src/libs/validation-schemas/signup.schema';
 import { authService } from 'src/service/auth';
 
@@ -28,6 +29,10 @@ interface ISignUpFormValues {
 const SignUp = () => {
     const [isLoading, setIsLoading] = useState(false);
 
+    const { showSuccess, showError } = useNotify();
+
+    const { push } = useHistory();
+
     const { ...methods } = useForm({
         resolver: yupResolver(signUpSchema),
     });
@@ -36,9 +41,10 @@ const SignUp = () => {
         try {
             setIsLoading(true);
             await authService.signUp(data);
-            alert('Account created successfully');
+            showSuccess('Account created successfully');
+            push(PAGE_URLS.HOME);
         } catch (error) {
-            alert(error);
+            showError(error);
         } finally {
             setIsLoading(false);
         }

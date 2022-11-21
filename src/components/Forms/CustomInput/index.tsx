@@ -35,7 +35,7 @@ const CustomInput = (props: ICustomInputProps) => {
                         </InputGroupText>
                     </InputGroupAddon>
                 )}
-                <Input
+                <input
                     className={`form-control ${
                         formState.errors[name] ? 'is-invalid' : ''
                     }`}

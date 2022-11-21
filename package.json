@@ -22,6 +22,7 @@
         "react-dom": "^18.2.0",
         "react-hook-form": "^7.39.3",
         "react-images-upload": "^1.2.8",
+        "react-notification-alert": "^0.0.13",
         "react-router-dom": "5.1.2",
         "react-scripts": "5.0.1",
         "reactstrap": "8.4.1",
