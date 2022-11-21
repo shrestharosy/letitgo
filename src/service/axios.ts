@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-    let accessToken = storageUtilityInstance.getCookie(ACCESS_TOKEN);
+    let accessToken = storageUtilityInstance.getItem(ACCESS_TOKEN);
     if (accessToken) {
         config.headers['Authorization'] = `Bearer ${accessToken}`;
         return config;

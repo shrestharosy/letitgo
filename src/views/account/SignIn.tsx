@@ -13,32 +13,19 @@ import {
 } from 'reactstrap';
 import CustomInput from 'src/components/Forms/CustomInput';
 import { PAGE_URLS } from 'src/constants/route';
+import useAuthHook from 'src/libs/hooks/auth.hook';
 import signInSchema from 'src/libs/validation-schemas/signin.schema';
-import { authService } from 'src/service/auth';
-
-interface ISignInFormValues {
-    username: string;
-    password: string;
-}
+import { ISignIn } from 'src/service/auth/auth.type';
 
 const SignIn = () => {
-    const [isLoading, setIsLoading] = useState(false);
+    const { isSignInLoading, onSignIn } = useAuthHook();
 
     const { ...methods } = useForm({
         resolver: yupResolver(signInSchema),
     });
 
-    const onSubmit: SubmitHandler<ISignInFormValues> = async (data) => {
-        try {
-            setIsLoading(true);
-            await authService.signIn(data);
-            alert('Login success');
-        } catch (error) {
-            alert(error.message);
-        } finally {
-            setIsLoading(false);
-        }
-        console.log(data);
+    const onSubmit: SubmitHandler<ISignIn> = async (data) => {
+        await onSignIn(data);
     };
     return (
         <Row className='justify-content-center'>
@@ -93,7 +80,7 @@ const SignIn = () => {
                                         className='my-4'
                                         color='primary'
                                         type='button'
-                                        disabled={isLoading}
+                                        disabled={isSignInLoading}
                                         onClick={methods.handleSubmit(onSubmit)}
                                     >
                                         Sign in

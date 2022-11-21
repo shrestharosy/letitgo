@@ -4,6 +4,7 @@ export const PAGE_URLS = {
     SIGN_UP: '/signup',
     SIGN_OUT: '/signout',
     USER: {
+        ACCOUNT: '/account',
         UPLOAD: '/upload',
     },
     PRODUCT: {
