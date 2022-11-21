@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 
 import {
     UncontrolledCollapse,
@@ -16,8 +16,13 @@ import {
     Row,
 } from 'reactstrap';
 import { PAGE_URLS } from 'src/constants/route';
+import { useAppContext } from 'src/context/auth.context';
 
 const Navbar = () => {
+    const { isLoggedIn } = useAppContext();
+
+    const { push } = useHistory();
+
     return (
         <>
             <header className='header-global'>
@@ -92,7 +97,11 @@ const Navbar = () => {
                                     <NavLink
                                         className='nav-link-icon'
                                         id='tooltip333589074'
-                                        to={PAGE_URLS.SIGN_IN}
+                                        to={
+                                            isLoggedIn
+                                                ? PAGE_URLS.USER.ACCOUNT
+                                                : PAGE_URLS.SIGN_IN
+                                        }
                                     >
                                         <i className='fa fa-user' />
                                         <span className='nav-link-inner--text d-lg-none ml-2'>
@@ -107,6 +116,25 @@ const Navbar = () => {
                                     </NavLink>
                                 </NavItem>
                             </Nav>
+
+                            {isLoggedIn && (
+                                <Nav
+                                    className='navbar-nav-hover align-items-lg-center'
+                                    navbar
+                                >
+                                    <UncontrolledDropdown nav>
+                                        <div
+                                            onClick={() => {
+                                                push(PAGE_URLS.SIGN_OUT);
+                                            }}
+                                        >
+                                            <span className='nav-link-inner--text'>
+                                                Sign Out
+                                            </span>
+                                        </div>
+                                    </UncontrolledDropdown>
+                                </Nav>
+                            )}
                         </UncontrolledCollapse>
                     </Container>
                 </NB>

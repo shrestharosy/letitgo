@@ -1,10 +1,12 @@
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 import { PAGE_URLS } from './constants/route';
+import AccountPage from './routes/account';
 import LandingPage from './routes/landing';
 import ProductDetailPage from './routes/product';
 import SignInPage from './routes/signin';
 import SignUpPage from './routes/signup';
+import SignOutPage from './routes/signout';
 import Upload from './routes/upload';
 
 interface IRoute {
@@ -25,6 +27,11 @@ const routes: Array<IRoute> = [
         component: <SignUpPage />,
     },
     {
+        path: PAGE_URLS.SIGN_OUT,
+        exact: true,
+        component: <SignOutPage />,
+    },
+    {
         path: PAGE_URLS.HOME,
         exact: true,
         component: <LandingPage />,
@@ -33,6 +40,11 @@ const routes: Array<IRoute> = [
         path: PAGE_URLS.USER.UPLOAD,
         exact: true,
         component: <Upload />,
+    },
+    {
+        path: PAGE_URLS.USER.ACCOUNT,
+        exact: true,
+        component: <AccountPage />,
     },
     {
         path: PAGE_URLS.PRODUCT.DETAIL,

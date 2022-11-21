@@ -1,3 +1,4 @@
+import { useAppContext } from 'src/context/auth.context';
 import { useHistory } from 'react-router-dom';
 import { ACCESS_TOKEN } from 'src/constants/storage';
 import storageUtilityInstance from 'src/libs/utils/storage';
@@ -10,6 +11,8 @@ import { PAGE_URLS } from 'src/constants/route';
 const useAuthHook = () => {
     const [isSignInLoading, setIsSignInLoading] = useState(false);
 
+    const { setIsLoggedIn } = useAppContext();
+
     const { push } = useHistory();
 
     const { showError } = useNotify();
@@ -19,6 +22,7 @@ const useAuthHook = () => {
             setIsSignInLoading(true);
             const response = await authService.signIn(data);
             storageUtilityInstance.setItem(ACCESS_TOKEN, response.token);
+            setIsLoggedIn(true);
             push(PAGE_URLS.USER.ACCOUNT);
         } catch (error) {
             showError(error.message);
@@ -27,7 +31,12 @@ const useAuthHook = () => {
         }
     };
 
-    return { isSignInLoading, onSignIn };
+    const onSignOut = () => {
+        storageUtilityInstance.removeItem(ACCESS_TOKEN);
+        setIsLoggedIn(false);
+    };
+
+    return { isSignInLoading, onSignIn, onSignOut };
 };
 
 export default useAuthHook;

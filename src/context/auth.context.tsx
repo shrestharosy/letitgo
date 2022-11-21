@@ -3,24 +3,27 @@ import type { FC, ReactNode } from 'react';
 import { checkIfLoggedInUser } from 'src/libs/utils/auth.util';
 
 interface IContext {
-    isAuthenticated: Boolean;
+    isLoggedIn: Boolean;
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AppContext = createContext<IContext>({
-    isAuthenticated: false,
+    isLoggedIn: false,
+    setIsLoggedIn: null,
 });
 
 const AppContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        setIsAuthenticated(checkIfLoggedInUser());
-    }, []);
+        setIsLoggedIn(checkIfLoggedInUser());
+    }, [isLoggedIn]);
 
     return (
         <AppContext.Provider
             value={{
-                isAuthenticated,
+                isLoggedIn,
+                setIsLoggedIn,
             }}
         >
             {children}
