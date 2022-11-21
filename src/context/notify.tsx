@@ -7,7 +7,7 @@ export const useNotify = () => {
     return useContext(NotifyContext);
 };
 
-const Notification: React.FC = ({ children }: { children: JSX.Element }) => {
+const Notification = ({ children }: { children: JSX.Element }) => {
     const notificationAlertRef = React.useRef(null);
 
     const showSuccess = (title, message) => {

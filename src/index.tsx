@@ -6,6 +6,7 @@ import './assets/scss/argon-design-system-react.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import NotifyContextProvider from 'src/context/notify';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -13,7 +14,9 @@ const root = ReactDOM.createRoot(
 root.render(
     <BrowserRouter>
         <React.StrictMode>
-            <App />
+            <NotifyContextProvider>
+                <App />
+            </NotifyContextProvider>
         </React.StrictMode>
     </BrowserRouter>
 );
