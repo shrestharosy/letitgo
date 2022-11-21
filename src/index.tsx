@@ -7,6 +7,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import NotifyContextProvider from 'src/context/notify';
+import AppContextProvider from 'src/context/auth.context';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -14,9 +15,11 @@ const root = ReactDOM.createRoot(
 root.render(
     <BrowserRouter>
         <React.StrictMode>
-            <NotifyContextProvider>
-                <App />
-            </NotifyContextProvider>
+            <AppContextProvider>
+                <NotifyContextProvider>
+                    <App />
+                </NotifyContextProvider>
+            </AppContextProvider>
         </React.StrictMode>
     </BrowserRouter>
 );
