@@ -5,4 +5,6 @@ export interface IProduct {
     description: string;
     category: string;
     image: string;
+    condition: number;
+    created_date: Date;
 }

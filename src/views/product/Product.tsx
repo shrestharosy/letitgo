@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Col, Row } from 'reactstrap';
+import { Col, Row, Badge } from 'reactstrap';
+import Condition from 'src/components/Condition';
 import { MainLoader } from 'src/components/Loader';
 import { productService } from 'src/service/product';
 import { IProduct } from 'src/service/product/product.type';
@@ -58,9 +59,15 @@ const Product = () => {
                                         ? `$${product.price}`
                                         : 'Free'}
                                 </small>
-                                <small className='d-block mt-3 product-label'>
-                                    Details
-                                </small>
+                                <Badge
+                                    className='text-uppercase'
+                                    color='primary'
+                                    pill
+                                >
+                                    {product.category}
+                                </Badge>
+
+                                <h6 className={'mt-3'}>Description</h6>
                                 <small className='d-block mt-3 text-justify product-description'>
                                     Far quitting dwelling graceful the likewise
                                     received building. An fact so to that show
@@ -71,6 +78,17 @@ const Product = () => {
                                     resolve. Own judgment directly few trifling.
                                     Elderly as pursuit at regular do parlors.
                                     Rank what has into fond she.
+                                </small>
+
+                                <Condition condition={product.condition} />
+
+                                <small className='d-block mt-4'>
+                                    Posted on
+                                </small>
+                                <small className='product-description text-muted'>
+                                    {new Date(
+                                        product.created_date
+                                    ).toDateString()}
                                 </small>
                             </Col>
                         </>
