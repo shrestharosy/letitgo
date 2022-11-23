@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import parseErrorMessage from './error';
-import storageUtilityInstance from 'src/libs/utils/storage';
+import storageUtilityInstance from 'src/libs/utils/storage.util';
 import { ACCESS_TOKEN } from 'src/constants/storage.constant';
 import Config from 'src/config';
 

@@ -1,7 +1,7 @@
 import { useAppContext } from 'src/context/auth.context';
 import { useHistory } from 'react-router-dom';
 import { ACCESS_TOKEN } from 'src/constants/storage.constant';
-import storageUtilityInstance from 'src/libs/utils/storage';
+import storageUtilityInstance from 'src/libs/utils/storage.util';
 import { useNotify } from 'src/context/notify';
 import { useState } from 'react';
 import { authService } from 'src/service/auth';
