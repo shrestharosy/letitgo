@@ -25,8 +25,8 @@ const Upload = () => {
                     <Card className='bg-gradient-secondary shadow'>
                         <CardBody className='p-lg-5'>
                             <h4 className='mb-4'>
-                                Start adding items that you wanna sell or give
-                                away
+                                Start adding details of the item that you wanna
+                                sell or give away
                             </h4>
                             <FormProvider {...methods}>
                                 <Form role='form'>

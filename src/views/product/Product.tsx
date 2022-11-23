@@ -69,15 +69,7 @@ const Product = () => {
 
                                 <h6 className={'mt-3'}>Description</h6>
                                 <small className='d-block mt-3 text-justify product-description'>
-                                    Far quitting dwelling graceful the likewise
-                                    received building. An fact so to that show
-                                    am shed sold cold. Unaffected remarkably get
-                                    yet introduced excellence terminated led.
-                                    Result either design saw she esteem and. On
-                                    ashamed no inhabit ferrars it ye besides
-                                    resolve. Own judgment directly few trifling.
-                                    Elderly as pursuit at regular do parlors.
-                                    Rank what has into fond she.
+                                    {product.description}
                                 </small>
 
                                 <Condition condition={product.condition} />
