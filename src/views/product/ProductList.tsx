@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Col, Row } from 'reactstrap';
+import { Col, Row, Badge } from 'reactstrap';
 import { MainLoader } from 'src/components/Loader';
 import { PAGE_URLS } from 'src/constants/route';
+import {
+    getProductConditionColor,
+    mapProductCondition,
+} from 'src/libs/utils/product.util';
 import { productService } from 'src/service/product';
 import { IProduct } from 'src/service/product/product.type';
 
@@ -65,6 +69,25 @@ const ProductList = () => {
                                     {product.price
                                         ? `$${product.price}`
                                         : 'Free'}
+                                </small>
+
+                                <small className='d-block'>
+                                    <Badge
+                                        className='text-uppercase'
+                                        color='primary'
+                                        pill
+                                    >
+                                        {product.category}
+                                    </Badge>
+                                    <Badge
+                                        className='text-uppercase ml-2'
+                                        color={getProductConditionColor(
+                                            product.condition
+                                        )}
+                                        pill
+                                    >
+                                        {mapProductCondition(product.condition)}
+                                    </Badge>
                                 </small>
                             </Col>
                         ))}
