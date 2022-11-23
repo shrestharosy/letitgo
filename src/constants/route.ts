@@ -5,10 +5,11 @@ export const PAGE_URLS = {
     SIGN_OUT: '/signout',
     USER: {
         ACCOUNT: '/account',
-        UPLOAD: '/upload',
     },
     PRODUCT: {
         HOME: '/products',
         DETAIL: '/products/:productId',
+        UPLOAD: '/products/upload',
+        EDIT: '/products/:productId/edit',
     },
 };

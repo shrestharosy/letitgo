@@ -90,31 +90,27 @@ const Navbar = () => {
                             </Nav>
 
                             <Nav
-                                className='align-items-lg-center ml-lg-auto'
+                                className='navbar-nav-hover align-items-lg-center ml-lg-auto'
                                 navbar
                             >
-                                <NavItem>
-                                    <NavLink
-                                        className='nav-link-icon'
-                                        id='tooltip333589074'
-                                        to={
-                                            isLoggedIn
-                                                ? PAGE_URLS.USER.ACCOUNT
-                                                : PAGE_URLS.SIGN_IN
-                                        }
-                                    >
-                                        <i className='fa fa-user' />
-                                        <span className='nav-link-inner--text d-lg-none ml-2'>
-                                            Account
-                                        </span>
-                                        <UncontrolledTooltip
-                                            delay={0}
-                                            target='tooltip333589074'
+                                <UncontrolledDropdown nav>
+                                    <DropdownToggle nav>
+                                        <span
+                                            onClick={() => {
+                                                isLoggedIn
+                                                    ? push(
+                                                          PAGE_URLS.USER.ACCOUNT
+                                                      )
+                                                    : push(PAGE_URLS.SIGN_IN);
+                                            }}
                                         >
-                                            Account
-                                        </UncontrolledTooltip>
-                                    </NavLink>
-                                </NavItem>
+                                            <i className='fa fa-user mr-1' />
+                                            <span className='nav-link-inner--text'>
+                                                Account
+                                            </span>
+                                        </span>
+                                    </DropdownToggle>
+                                </UncontrolledDropdown>
                             </Nav>
 
                             {isLoggedIn && (
@@ -123,15 +119,18 @@ const Navbar = () => {
                                     navbar
                                 >
                                     <UncontrolledDropdown nav>
-                                        <div
-                                            onClick={() => {
-                                                push(PAGE_URLS.SIGN_OUT);
-                                            }}
-                                        >
-                                            <span className='nav-link-inner--text'>
-                                                Sign Out
+                                        <DropdownToggle nav>
+                                            <span
+                                                onClick={() => {
+                                                    push(PAGE_URLS.SIGN_OUT);
+                                                }}
+                                            >
+                                                <i className='ni ni-collection d-lg-none mr-1' />
+                                                <span className='nav-link-inner--text'>
+                                                    Sign Out
+                                                </span>
                                             </span>
-                                        </div>
+                                        </DropdownToggle>
                                     </UncontrolledDropdown>
                                 </Nav>
                             )}

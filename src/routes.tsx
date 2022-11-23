@@ -37,7 +37,12 @@ const routes: Array<IRoute> = [
         component: <LandingPage />,
     },
     {
-        path: PAGE_URLS.USER.UPLOAD,
+        path: PAGE_URLS.PRODUCT.EDIT,
+        exact: true,
+        component: <Upload />,
+    },
+    {
+        path: PAGE_URLS.PRODUCT.UPLOAD,
         exact: true,
         component: <Upload />,
     },
