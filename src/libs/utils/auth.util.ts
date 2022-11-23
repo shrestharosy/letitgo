@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN } from 'src/constants/storage';
+import { ACCESS_TOKEN } from 'src/constants/storage.constant';
 import storageUtilityInstance from './storage';
 
 export const checkIfLoggedInUser = () => {
