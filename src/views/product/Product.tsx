@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Col, Row, Badge } from 'reactstrap';
+import { Badge, Col, Row } from 'reactstrap';
+import ActionButton from 'src/components/Button';
 import Condition from 'src/components/Condition';
 import { MainLoader } from 'src/components/Loader';
+import { useNotify } from 'src/context/notify';
 import { productService } from 'src/service/product';
 import { IProduct } from 'src/service/product/product.type';
 
@@ -11,6 +13,7 @@ const Product = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const param: { productId?: string } = useParams();
+    const { showInfo } = useNotify();
 
     useEffect(() => {
         const getProduct = async (id: string) => {
@@ -73,6 +76,37 @@ const Product = () => {
                                 </small>
 
                                 <Condition condition={product.condition} />
+
+                                <>
+                                    <small className='d-block mt-4'>
+                                        Posted by
+                                    </small>
+                                    <small className='product-description text-muted'>
+                                        <span className='mr-2'>
+                                            {product.owner_first_name &&
+                                            product.owner_last_name
+                                                ? `${product.owner_first_name} ${product.owner_last_name}`
+                                                : 'n/a'}
+                                        </span>
+                                    </small>
+                                    <ActionButton
+                                        icon='fa fa-envelope'
+                                        label='Email'
+                                        style={{ padding: '0.1rem 0.3rem' }}
+                                        onClick={() => {}}
+                                    />
+                                    <ActionButton
+                                        icon='fa fa-copy'
+                                        label='Copy'
+                                        style={{ padding: '0.1rem 0.3rem' }}
+                                        onClick={() => {
+                                            navigator.clipboard.writeText(
+                                                product.owner_email
+                                            );
+                                            showInfo('Email address copied');
+                                        }}
+                                    />
+                                </>
 
                                 <small className='d-block mt-4'>
                                     Posted on

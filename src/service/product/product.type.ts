@@ -11,6 +11,10 @@ export interface IProduct extends IBaseProduct {
     image: string;
     created_date: Date;
     user: number;
+    owner_id: number;
+    owner_email: string;
+    owner_first_name: string;
+    owner_last_name: string;
 }
 
 export interface IModifyProduct extends IBaseProduct {
