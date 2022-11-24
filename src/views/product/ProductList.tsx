@@ -59,7 +59,10 @@ const ProductList = () => {
                                         alt='...'
                                         className='img-fluid rounded'
                                         style={{ maxHeight: '100%' }}
-                                        src={product.image}
+                                        src={
+                                            product.image ??
+                                            require(`src/assets/img/brand/image_not_found.jpg`)
+                                        }
                                     />
                                 </div>
                                 <small className='d-block font-weight-bold mt-4'>

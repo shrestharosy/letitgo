@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Badge, Col, Row } from 'reactstrap';
+import { Badge, Col, Row, Container } from 'reactstrap';
 import ActionButton from 'src/components/Button';
 import Condition from 'src/components/Condition';
 import { MainLoader } from 'src/components/Loader';
@@ -18,7 +18,7 @@ const MyProductList = () => {
         const getProducts = async () => {
             setIsLoading(true);
             try {
-                const response = await productService.fetchProducts();
+                const response = await productService.fetchMyProducts(4);
                 setProducts(response);
             } catch (error) {
                 console.log(error);
@@ -33,7 +33,11 @@ const MyProductList = () => {
     return (
         <>
             <Row>
-                {isLoading && <MainLoader />}
+                {isLoading && (
+                    <Container>
+                        <MainLoader />
+                    </Container>
+                )}
                 {!isLoading && products.length === 0 && (
                     <small>You do not have any items at the moment.</small>
                 )}
@@ -45,6 +49,7 @@ const MyProductList = () => {
                             style={{
                                 justifyContent: 'center',
                                 alignItems: 'center',
+                                cursor: 'pointer',
                             }}
                             onClick={() =>
                                 push(`${PAGE_URLS.PRODUCT.HOME}/${product.id}`)
@@ -58,7 +63,10 @@ const MyProductList = () => {
                                             maxHeight: '100%',
                                             maxWidth: '100%',
                                         }}
-                                        src={product.image}
+                                        src={
+                                            product.image ??
+                                            require(`src/assets/img/brand/image_not_found.jpg`)
+                                        }
                                     />
                                 </div>
                             </Col>

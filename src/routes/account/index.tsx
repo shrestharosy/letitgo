@@ -17,7 +17,7 @@ const AccountPage = () => {
                                     <Col className='order-lg-1' lg='3'>
                                         <div className='card-profile-image'>
                                             <a
-                                                href='#pablo'
+                                                href='#ola'
                                                 onClick={(e) =>
                                                     e.preventDefault()
                                                 }
@@ -41,7 +41,7 @@ const AccountPage = () => {
                                             User sub details
                                         </div>
                                     </Col>
-                                    <Col className='order-lg-3' lg='4'>
+                                    {/* <Col className='order-lg-3' lg='4'>
                                         <div className='card-profile-stats d-flex justify-content-center'>
                                             <div>
                                                 <span className='heading'>
@@ -60,13 +60,13 @@ const AccountPage = () => {
                                                 </span>
                                             </div>
                                         </div>
-                                    </Col>
+                                    </Col> */}
                                 </Row>
 
-                                <div className={'py-5 border-top'}>
+                                <div className={'py-6 border-top'}>
                                     <Row>
                                         <Col>
-                                            <h6>My Items</h6>
+                                            <h5>My Items</h5>
                                         </Col>
                                         <Col className={'text-right mb-4'}>
                                             <Button

@@ -11,7 +11,7 @@ const fetchProducts = async () => {
 
 const fetchMyProducts = async (userId: number) => {
     const response: AxiosResponse<Array<IProduct>> = await axiosInstance.get(
-        `/products/?user=${userId}`
+        `/products/?owner=${userId}`
     );
     return response.data;
 };

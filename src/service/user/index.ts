@@ -4,7 +4,7 @@ import { IUser } from './user.type';
 
 // TODO
 const fetchUserProfile = async () => {
-    const response: AxiosResponse<{}> = await axiosInstance.get(`/products/`);
+    const response: AxiosResponse<{}> = await axiosInstance.get(`/user/`);
     return response.data;
 };
 
