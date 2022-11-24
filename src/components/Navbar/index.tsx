@@ -1,9 +1,9 @@
+import { useEffect, useState } from 'react';
 import { Link, NavLink, useHistory } from 'react-router-dom';
 
 import {
     UncontrolledCollapse,
     UncontrolledDropdown,
-    UncontrolledTooltip,
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
@@ -12,16 +12,32 @@ import {
     Nav,
     Navbar as NB,
     NavbarBrand,
-    NavItem,
     Row,
 } from 'reactstrap';
 import { PAGE_URLS } from 'src/constants/route';
 import { useAppContext } from 'src/context/auth.context';
+import { productService } from 'src/service/product';
 
 const Navbar = () => {
     const { isLoggedIn } = useAppContext();
 
     const { push } = useHistory();
+
+    const [productCategories, setProductCategories] = useState<Array<string>>(
+        []
+    );
+
+    useEffect(() => {
+        const getProductCategories = async () => {
+            try {
+                const response = await productService.fetchCategories();
+                setProductCategories(response.map((c) => c.name));
+            } catch (error) {
+                console.log(error.message);
+            }
+        };
+        getProductCategories();
+    }, []);
 
     return (
         <>
@@ -70,21 +86,14 @@ const Navbar = () => {
                                         </span>
                                     </DropdownToggle>
                                     <DropdownMenu>
-                                        <DropdownItem to='/clothes' tag={Link}>
-                                            Clothes
-                                        </DropdownItem>
-                                        <DropdownItem
-                                            to='/furnitures'
-                                            tag={Link}
-                                        >
-                                            Furnitures
-                                        </DropdownItem>
-                                        <DropdownItem
-                                            to='/household'
-                                            tag={Link}
-                                        >
-                                            Household
-                                        </DropdownItem>
+                                        {productCategories.map((category) => (
+                                            <DropdownItem
+                                                to={`/${category}`}
+                                                tag={Link}
+                                            >
+                                                {category}
+                                            </DropdownItem>
+                                        ))}
                                     </DropdownMenu>
                                 </UncontrolledDropdown>
                             </Nav>
