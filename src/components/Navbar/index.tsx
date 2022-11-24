@@ -16,12 +16,15 @@ import {
 } from 'reactstrap';
 import { PAGE_URLS } from 'src/constants/route';
 import { useAppContext } from 'src/context/auth.context';
+import { useNotify } from 'src/context/notify';
 import { productService } from 'src/service/product';
 
 const Navbar = () => {
     const { isLoggedIn } = useAppContext();
 
     const { push } = useHistory();
+
+    const { showInfo } = useNotify();
 
     const [productCategories, setProductCategories] = useState<Array<string>>(
         []
@@ -102,22 +105,21 @@ const Navbar = () => {
                                 className='navbar-nav-hover align-items-lg-center ml-lg-auto'
                                 navbar
                             >
-                                <UncontrolledDropdown nav>
-                                    <DropdownToggle nav>
-                                        <span
-                                            onClick={() => {
-                                                isLoggedIn
-                                                    ? push(
-                                                          PAGE_URLS.USER.ACCOUNT
-                                                      )
-                                                    : push(PAGE_URLS.SIGN_IN);
-                                            }}
-                                        >
+                                <UncontrolledDropdown>
+                                    <DropdownToggle
+                                        nav
+                                        onClick={() => {
+                                            isLoggedIn
+                                                ? push(PAGE_URLS.USER.ACCOUNT)
+                                                : push(PAGE_URLS.SIGN_IN);
+                                        }}
+                                    >
+                                        <>
                                             <i className='fa fa-user mr-1' />
                                             <span className='nav-link-inner--text'>
                                                 Account
                                             </span>
-                                        </span>
+                                        </>
                                     </DropdownToggle>
                                 </UncontrolledDropdown>
                             </Nav>
@@ -127,18 +129,22 @@ const Navbar = () => {
                                     className='navbar-nav-hover align-items-lg-center'
                                     navbar
                                 >
-                                    <UncontrolledDropdown nav>
-                                        <DropdownToggle nav>
-                                            <span
-                                                onClick={() => {
-                                                    push(PAGE_URLS.SIGN_OUT);
-                                                }}
-                                            >
+                                    <UncontrolledDropdown>
+                                        <DropdownToggle
+                                            nav
+                                            onClick={() => {
+                                                showInfo(
+                                                    'You have signed out from the app'
+                                                );
+                                                push(PAGE_URLS.SIGN_OUT);
+                                            }}
+                                        >
+                                            <>
                                                 <i className='ni ni-collection d-lg-none mr-1' />
                                                 <span className='nav-link-inner--text'>
                                                     Sign Out
                                                 </span>
-                                            </span>
+                                            </>
                                         </DropdownToggle>
                                     </UncontrolledDropdown>
                                 </Nav>
