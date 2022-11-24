@@ -5,10 +5,11 @@ interface IActionButtonProps {
     icon: string;
     onClick: () => void;
     color?: string;
+    style?: Object;
 }
 
 const ActionButton = (props: IActionButtonProps) => {
-    const { label, color = 'primary', icon, onClick } = props;
+    const { label, color = 'primary', icon, style, onClick } = props;
     return (
         <>
             <Button
@@ -16,7 +17,7 @@ const ActionButton = (props: IActionButtonProps) => {
                 size='sm'
                 type='button'
                 outline
-                style={{ textTransform: 'none' }}
+                style={{ textTransform: 'none', cursor: 'pointer', ...style }}
                 data-placement='top'
                 id={label}
                 onClick={(e) => {

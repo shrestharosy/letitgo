@@ -9,6 +9,13 @@ const fetchProducts = async () => {
     return response.data;
 };
 
+const fetchMyProducts = async (userId: number) => {
+    const response: AxiosResponse<Array<IProduct>> = await axiosInstance.get(
+        `/products/?user=${userId}`
+    );
+    return response.data;
+};
+
 const fetchProduct = async (productId: string) => {
     const response: AxiosResponse<IProduct> = await axiosInstance.get(
         `/products/${productId}/`
@@ -45,6 +52,7 @@ const fetchCategories = async () => {
 
 export const productService = {
     fetchProducts,
+    fetchMyProducts,
     fetchProduct,
     addProduct,
     fetchCategories,

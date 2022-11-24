@@ -10,6 +10,7 @@ export interface IProduct extends IBaseProduct {
     id: number;
     image: string;
     created_date: Date;
+    user: number;
 }
 
 export interface IModifyProduct extends IBaseProduct {
