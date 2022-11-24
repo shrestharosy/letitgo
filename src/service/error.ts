@@ -28,7 +28,7 @@ function parseClientError(error: AxiosResponse<IAxiosErrorData>): IParsedError {
             window.location.href = PAGE_URLS.SIGN_OUT;
         }
         console.log(error.data.detail);
-        parsedError.message = `Uh oh. Please log out.`;
+        parsedError.message = `Uh oh! You do not have access to this request.`;
     } else if (error.status === 400) {
         parsedError.message = error.data.detail;
     } else if (error.status === 401) {

@@ -1,7 +1,13 @@
 import React, { useContext } from 'react';
 import NotificationAlert from 'react-notification-alert';
 
-const NotifyContext = React.createContext(null);
+interface INotifyContext {
+    showSuccess: (message: string, title?: string) => void;
+    showError: (message: string, title?: string) => void;
+    showInfo: (message: string, title?: string) => void;
+}
+
+const NotifyContext: React.Context<INotifyContext> = React.createContext(null);
 
 export const useNotify = () => {
     return useContext(NotifyContext);
@@ -10,7 +16,7 @@ export const useNotify = () => {
 const Notification = ({ children }: { children: JSX.Element }) => {
     const notificationAlertRef = React.useRef(null);
 
-    const showSuccess = (title, message) => {
+    const showSuccess = (message: string, title?: string) => {
         let options = {
             place: 'tc',
             message: (
@@ -27,7 +33,7 @@ const Notification = ({ children }: { children: JSX.Element }) => {
         };
         notificationAlertRef.current.notificationAlert(options);
     };
-    const showError = (title, message) => {
+    const showError = (message: string, title?: string) => {
         let options = {
             place: 'tc',
             message: (
@@ -45,7 +51,7 @@ const Notification = ({ children }: { children: JSX.Element }) => {
         notificationAlertRef.current.notificationAlert(options);
     };
 
-    const showInfo = (title, message) => {
+    const showInfo = (message: string, title?: string) => {
         let options = {
             place: 'tc',
             message: (

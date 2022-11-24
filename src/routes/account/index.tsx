@@ -75,7 +75,7 @@ const AccountPage = () => {
                                                 type='button'
                                                 onClick={() =>
                                                     push(
-                                                        `${PAGE_URLS.PRODUCT.UPLOAD}`
+                                                        `${PAGE_URLS.PRODUCT.ADD}`
                                                     )
                                                 }
                                             >

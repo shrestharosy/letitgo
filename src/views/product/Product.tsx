@@ -55,9 +55,9 @@ const Product = () => {
                                     {product.title}
                                 </small>
                                 <small className='d-block mt-2 product-price'>
-                                    {product.price
-                                        ? `$${product.price}`
-                                        : 'Free'}
+                                    {Math.floor(+product.price) === 0
+                                        ? 'Free'
+                                        : product.price && `$${product.price}`}
                                 </small>
                                 <Badge
                                     className='text-uppercase'

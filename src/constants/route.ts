@@ -9,7 +9,7 @@ export const PAGE_URLS = {
     PRODUCT: {
         HOME: '/products',
         DETAIL: '/products/:productId',
-        UPLOAD: '/products/upload',
+        ADD: '/products/add',
         EDIT: '/products/:productId/edit',
     },
 };

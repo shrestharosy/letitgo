@@ -7,7 +7,7 @@ import ProductDetailPage from './routes/product';
 import SignInPage from './routes/signin';
 import SignUpPage from './routes/signup';
 import SignOutPage from './routes/signout';
-import Upload from './routes/upload';
+import AddProduct from './routes/product/add';
 
 interface IRoute {
     path: string;
@@ -39,12 +39,12 @@ const routes: Array<IRoute> = [
     {
         path: PAGE_URLS.PRODUCT.EDIT,
         exact: true,
-        component: <Upload />,
+        component: <AddProduct />,
     },
     {
-        path: PAGE_URLS.PRODUCT.UPLOAD,
+        path: PAGE_URLS.PRODUCT.ADD,
         exact: true,
-        component: <Upload />,
+        component: <AddProduct />,
     },
     {
         path: PAGE_URLS.USER.ACCOUNT,

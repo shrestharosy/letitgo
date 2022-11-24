@@ -5,3 +5,7 @@ export const PRODUCT_CONDITION = {
     Great: 4,
     New: 5,
 };
+
+export const FILE_SIZE = 5242880;
+
+export const SUPPORTED_FILE_FORMATS = ['jpg', 'jpeg', 'png'];

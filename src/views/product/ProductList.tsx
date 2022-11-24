@@ -66,9 +66,9 @@ const ProductList = () => {
                                     {product.title}
                                 </small>
                                 <small>
-                                    {product.price
-                                        ? `$${product.price}`
-                                        : 'Free'}
+                                    {Math.floor(+product.price) === 0
+                                        ? 'Free'
+                                        : product.price && `$${product.price}`}
                                 </small>
 
                                 <small className='d-block'>

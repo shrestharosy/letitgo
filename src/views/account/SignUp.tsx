@@ -129,7 +129,7 @@ const SignUp = () => {
                                     <Button
                                         className='mt-4'
                                         color='primary'
-                                        type='button'
+                                        type='submit'
                                         disabled={isLoading}
                                         onClick={methods.handleSubmit(onSubmit)}
                                     >
