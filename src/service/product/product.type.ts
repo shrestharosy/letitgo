@@ -7,7 +7,7 @@ export interface IBaseProduct {
 }
 
 export interface IProduct extends IBaseProduct {
-    id: number;
+    id: string;
     image: string;
     created_date: Date;
     user: number;

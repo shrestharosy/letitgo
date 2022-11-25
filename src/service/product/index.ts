@@ -16,9 +16,9 @@ const fetchMyProducts = async (userId: number) => {
     return response.data;
 };
 
-const fetchProduct = async (productId: string) => {
+const fetchProduct = async (id: string) => {
     const response: AxiosResponse<IProduct> = await axiosInstance.get(
-        `/products/${productId}/`
+        `/products/${id}/`
     );
     return response.data;
 };
@@ -43,6 +43,13 @@ const addProduct = async (data: IModifyProduct) => {
     return response.data;
 };
 
+const deleteProduct = async (id: string) => {
+    const response: AxiosResponse<IProduct> = await axiosInstance.delete(
+        `/products/${id}/`
+    );
+    return response.data;
+};
+
 const fetchCategories = async () => {
     const response: AxiosResponse<Array<ICategory>> = await axiosInstance.get(
         `/categories/`
@@ -55,5 +62,6 @@ export const productService = {
     fetchMyProducts,
     fetchProduct,
     addProduct,
+    deleteProduct,
     fetchCategories,
 };

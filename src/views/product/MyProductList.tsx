@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { Badge, Col, Row, Container } from 'reactstrap';
-import ActionButton from 'src/components/Button';
-import Condition from 'src/components/Condition';
+import { Container, Row } from 'reactstrap';
 import { MainLoader } from 'src/components/Loader';
-import { PAGE_URLS } from 'src/constants/route';
+import ProductRow from 'src/components/ProductRow';
 import { productService } from 'src/service/product';
 import { IProduct } from 'src/service/product/product.type';
 
@@ -12,23 +9,21 @@ const MyProductList = () => {
     const [products, setProducts] = useState<Array<IProduct>>([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    const { push } = useHistory();
-
     useEffect(() => {
-        const getProducts = async () => {
-            setIsLoading(true);
-            try {
-                const response = await productService.fetchMyProducts(4);
-                setProducts(response);
-            } catch (error) {
-                console.log(error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
         getProducts();
     }, []);
+
+    const getProducts = async () => {
+        setIsLoading(true);
+        try {
+            const response = await productService.fetchMyProducts(4);
+            setProducts(response);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
         <>
@@ -44,91 +39,11 @@ const MyProductList = () => {
                 {!isLoading &&
                     products.length > 0 &&
                     products.map((product) => (
-                        <Row
+                        <ProductRow
                             key={product.id}
-                            style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                cursor: 'pointer',
-                            }}
-                            onClick={() =>
-                                push(`${PAGE_URLS.PRODUCT.HOME}/${product.id}`)
-                            }
-                        >
-                            <Col>
-                                <div className='m-3'>
-                                    <img
-                                        alt='...'
-                                        style={{
-                                            maxHeight: '100%',
-                                            maxWidth: '100%',
-                                        }}
-                                        src={
-                                            product.image ??
-                                            require(`src/assets/img/brand/image_not_found.jpg`)
-                                        }
-                                    />
-                                </div>
-                            </Col>
-                            <Col>
-                                <small>{product.title}</small>
-                            </Col>
-                            <Col>
-                                <small>
-                                    {product.price
-                                        ? `$${product.price}`
-                                        : 'Free'}
-                                </small>
-                            </Col>
-                            <Col>
-                                <small>
-                                    <Badge
-                                        className='text-uppercase'
-                                        color='primary'
-                                        pill
-                                    >
-                                        {product.category}
-                                    </Badge>
-                                </small>
-                            </Col>
-                            <Col>
-                                <small>
-                                    <Condition condition={product.condition} />
-                                </small>
-                            </Col>
-                            <Col className={'flex'}>
-                                <ActionButton
-                                    icon='fa fa-eye'
-                                    label='View'
-                                    onClick={() =>
-                                        push(
-                                            `${PAGE_URLS.PRODUCT.HOME}/${product.id}`
-                                        )
-                                    }
-                                />
-
-                                <ActionButton
-                                    icon='fa fa-edit'
-                                    label='Edit'
-                                    onClick={() =>
-                                        push(
-                                            `${PAGE_URLS.PRODUCT.HOME}/${product.id}/edit`
-                                        )
-                                    }
-                                />
-
-                                <ActionButton
-                                    icon='fa fa-trash'
-                                    color='danger'
-                                    label='Delete'
-                                    onClick={() =>
-                                        push(
-                                            `${PAGE_URLS.PRODUCT.HOME}/${product.id}/edit`
-                                        )
-                                    }
-                                />
-                            </Col>
-                        </Row>
+                            product={product}
+                            getProducts={getProducts}
+                        />
                     ))}
             </Row>
         </>
