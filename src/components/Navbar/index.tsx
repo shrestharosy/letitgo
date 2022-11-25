@@ -15,20 +15,21 @@ import {
     Row,
 } from 'reactstrap';
 import { PAGE_URLS } from 'src/constants/route';
+import { USER } from 'src/constants/storage.constant';
 import { useAppContext } from 'src/context/auth.context';
-import { useNotify } from 'src/context/notify';
+import storageUtilityInstance from 'src/libs/utils/storage.util';
 import { productService } from 'src/service/product';
+import { IUserProfile } from 'src/service/user/user.type';
 
 const Navbar = () => {
     const { isLoggedIn } = useAppContext();
 
     const { push } = useHistory();
 
-    const { showInfo } = useNotify();
-
     const [productCategories, setProductCategories] = useState<Array<string>>(
         []
     );
+    const [userProfile, setUserProfile] = useState({} as IUserProfile);
 
     useEffect(() => {
         const getProductCategories = async () => {
@@ -41,6 +42,13 @@ const Navbar = () => {
         };
         getProductCategories();
     }, []);
+
+    useEffect(() => {
+        const user = storageUtilityInstance.getItem(USER);
+        if (user) {
+            setUserProfile(JSON.parse(user));
+        }
+    }, [isLoggedIn]);
 
     return (
         <>
@@ -115,7 +123,7 @@ const Navbar = () => {
                                         }}
                                     >
                                         <>
-                                            <i className='fa fa-user mr-1' />
+                                            {/* <i className='fa fa-user mr-1' /> */}
                                             <span className='nav-link-inner--text'>
                                                 Account
                                             </span>
@@ -125,29 +133,31 @@ const Navbar = () => {
                             </Nav>
 
                             {isLoggedIn && (
-                                <Nav
-                                    className='navbar-nav-hover align-items-lg-center'
-                                    navbar
-                                >
-                                    <UncontrolledDropdown>
-                                        <DropdownToggle
-                                            nav
-                                            onClick={() => {
-                                                showInfo(
-                                                    'You have signed out from the app'
-                                                );
-                                                push(PAGE_URLS.SIGN_OUT);
-                                            }}
-                                        >
-                                            <>
-                                                <i className='ni ni-collection d-lg-none mr-1' />
+                                <>
+                                    <Nav
+                                        className='navbar-nav-hover align-items-lg-center'
+                                        navbar
+                                    >
+                                        <UncontrolledDropdown nav>
+                                            <DropdownToggle nav>
+                                                <i className='fa fa-user mr-1' />
+
                                                 <span className='nav-link-inner--text'>
-                                                    Sign Out
+                                                    {userProfile.first_name}{' '}
+                                                    {userProfile.last_name}
                                                 </span>
-                                            </>
-                                        </DropdownToggle>
-                                    </UncontrolledDropdown>
-                                </Nav>
+                                            </DropdownToggle>
+                                            <DropdownMenu>
+                                                <DropdownItem
+                                                    to={PAGE_URLS.SIGN_OUT}
+                                                    tag={Link}
+                                                >
+                                                    Sign Out
+                                                </DropdownItem>
+                                            </DropdownMenu>
+                                        </UncontrolledDropdown>
+                                    </Nav>
+                                </>
                             )}
                         </UncontrolledCollapse>
                     </Container>

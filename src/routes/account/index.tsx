@@ -1,11 +1,25 @@
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Card, Col, Container, Row, Button } from 'reactstrap';
+import { Button, Card, Col, Container, Row } from 'reactstrap';
 import { PAGE_URLS } from 'src/constants/route';
+import { USER } from 'src/constants/storage.constant';
 import withProtectedPage from 'src/libs/hoc/withProtectedPage';
+import storageUtilityInstance from 'src/libs/utils/storage.util';
+import { IUserProfile } from 'src/service/user/user.type';
 import MyProductList from 'src/views/product/MyProductList';
 
 const AccountPage = () => {
     const { push } = useHistory();
+
+    const [userProfile, setUserProfile] = useState<IUserProfile>(null);
+
+    useEffect(() => {
+        const user = storageUtilityInstance.getItem(USER);
+        if (user) {
+            setUserProfile(JSON.parse(user));
+        }
+    }, []);
+
     return (
         <>
             <main className='mt-9 overflow-visible'>
@@ -34,33 +48,14 @@ const AccountPage = () => {
                                     <Col className='order-lg-2' lg='3'>
                                         <div className='h5 mt-4'>
                                             <i className='ni business_briefcase-24 mr-2' />
-                                            User details here
+                                            {userProfile.first_name}{' '}
+                                            {userProfile.last_name}
                                         </div>
                                         <div>
                                             <i className='ni education_hat mr-2' />
-                                            User sub details
+                                            {userProfile.email}
                                         </div>
                                     </Col>
-                                    {/* <Col className='order-lg-3' lg='4'>
-                                        <div className='card-profile-stats d-flex justify-content-center'>
-                                            <div>
-                                                <span className='heading'>
-                                                    22
-                                                </span>
-                                                <span className='description'>
-                                                    Items
-                                                </span>
-                                            </div>
-                                            <div>
-                                                <span className='heading'>
-                                                    10
-                                                </span>
-                                                <span className='description'>
-                                                    Photos
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </Col> */}
                                 </Row>
 
                                 <div className={'py-6 border-top'}>

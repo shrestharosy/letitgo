@@ -1,6 +1,6 @@
 import { useAppContext } from 'src/context/auth.context';
 import { useHistory } from 'react-router-dom';
-import { ACCESS_TOKEN } from 'src/constants/storage.constant';
+import { ACCESS_TOKEN, USER } from 'src/constants/storage.constant';
 import storageUtilityInstance from 'src/libs/utils/storage.util';
 import { useNotify } from 'src/context/notify';
 import { useState } from 'react';
@@ -20,8 +20,9 @@ const useAuthHook = () => {
     const onSignIn = async (data: ISignIn) => {
         try {
             setIsSignInLoading(true);
-            const response = await authService.signIn(data);
-            storageUtilityInstance.setItem(ACCESS_TOKEN, response.token);
+            const { token, ...rest } = await authService.signIn(data);
+            storageUtilityInstance.setItem(ACCESS_TOKEN, token);
+            storageUtilityInstance.setItem(USER, JSON.stringify(rest));
             setIsLoggedIn(true);
             push(PAGE_URLS.USER.ACCOUNT);
         } catch (error) {
