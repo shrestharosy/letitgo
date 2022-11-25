@@ -8,6 +8,7 @@ import SignInPage from './routes/signin';
 import SignUpPage from './routes/signup';
 import SignOutPage from './routes/signout';
 import AddProduct from './routes/product/add';
+import EditProduct from './routes/product/edit';
 
 interface IRoute {
     path: string;
@@ -39,7 +40,7 @@ const routes: Array<IRoute> = [
     {
         path: PAGE_URLS.PRODUCT.EDIT,
         exact: true,
-        component: <AddProduct />,
+        component: <EditProduct />,
     },
     {
         path: PAGE_URLS.PRODUCT.ADD,

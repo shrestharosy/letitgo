@@ -26,15 +26,16 @@ import {
 } from 'src/constants/product.constant';
 import productSchema from 'src/libs/validation-schemas/product.schema';
 import { productService } from 'src/service/product';
-import { IModifyProduct } from 'src/service/product/product.type';
+import { IModifyProduct, IProduct } from 'src/service/product/product.type';
 
 interface IUploadProductFormProps {
     submitButtonLabel: string;
     onSubmit: SubmitHandler<IModifyProduct>;
+    product?: IProduct;
 }
 
 const UploadProductForm = (props: IUploadProductFormProps) => {
-    const { submitButtonLabel, onSubmit } = props;
+    const { submitButtonLabel, product, onSubmit } = props;
 
     const [localImage, setLocalImage] = useState(null);
     const [productCategories, setProductCategories] = useState<Array<string>>(
@@ -62,6 +63,11 @@ const UploadProductForm = (props: IUploadProductFormProps) => {
         };
         getProductCategories();
     }, []);
+
+    useEffect(() => {
+        methods.reset(product);
+        setLocalImage(product.image);
+    }, [product]);
 
     return (
         <Card className='bg-gradient-secondary shadow'>
@@ -122,7 +128,13 @@ const UploadProductForm = (props: IUploadProductFormProps) => {
                                     </small>
                                     <img
                                         alt={''}
-                                        src={URL.createObjectURL(localImage)}
+                                        src={
+                                            typeof localImage === 'string'
+                                                ? localImage
+                                                : URL.createObjectURL(
+                                                      localImage
+                                                  )
+                                        }
                                         className={'image'}
                                     />
                                 </div>

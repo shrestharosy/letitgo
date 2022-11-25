@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import axiosInstance from '../axios';
 import { IProduct, IModifyProduct, ICategory } from './product.type';
 
@@ -43,6 +43,38 @@ const addProduct = async (data: IModifyProduct) => {
     return response.data;
 };
 
+const updateProduct = async (id: string, data: IModifyProduct) => {
+    let options: AxiosRequestConfig<any> = {
+        method: 'PUT',
+        url: `/products/${id}/`,
+    };
+
+    if (typeof data.image === 'object') {
+        const form = new FormData();
+        Object.entries(data).forEach((product) =>
+            form.append(product[0], product[1])
+        );
+        options = {
+            ...options,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+            data: form,
+        };
+    }
+
+    if (typeof data.image === 'string') {
+        options = {
+            ...options,
+            data,
+        };
+    }
+
+    const response: AxiosResponse<Array<IProduct>> =
+        await axiosInstance.request(options);
+    return response.data;
+};
+
 const deleteProduct = async (id: string) => {
     const response: AxiosResponse<IProduct> = await axiosInstance.delete(
         `/products/${id}/`
@@ -62,6 +94,7 @@ export const productService = {
     fetchMyProducts,
     fetchProduct,
     addProduct,
+    updateProduct,
     deleteProduct,
     fetchCategories,
 };
