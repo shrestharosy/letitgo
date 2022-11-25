@@ -48,12 +48,12 @@ const AccountPage = () => {
                                     <Col className='order-lg-2' lg='3'>
                                         <div className='h5 mt-4'>
                                             <i className='ni business_briefcase-24 mr-2' />
-                                            {userProfile.first_name}{' '}
-                                            {userProfile.last_name}
+                                            {userProfile?.first_name}{' '}
+                                            {userProfile?.last_name}
                                         </div>
                                         <div>
                                             <i className='ni education_hat mr-2' />
-                                            {userProfile.email}
+                                            {userProfile?.email}
                                         </div>
                                     </Col>
                                 </Row>

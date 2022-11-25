@@ -143,8 +143,8 @@ const Navbar = () => {
                                                 <i className='fa fa-user mr-1' />
 
                                                 <span className='nav-link-inner--text'>
-                                                    {userProfile.first_name}{' '}
-                                                    {userProfile.last_name}
+                                                    {userProfile?.first_name}{' '}
+                                                    {userProfile?.last_name}
                                                 </span>
                                             </DropdownToggle>
                                             <DropdownMenu>
