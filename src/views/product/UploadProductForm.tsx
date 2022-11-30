@@ -66,7 +66,7 @@ const UploadProductForm = (props: IUploadProductFormProps) => {
 
     useEffect(() => {
         methods.reset(product);
-        setLocalImage(product.image);
+        setLocalImage(product?.image);
     }, [product]);
 
     return (

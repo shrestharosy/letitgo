@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Badge, Col, Row } from 'reactstrap';
+import { Badge, Col, Row, Button } from 'reactstrap';
 import ActionButton from 'src/components/Button';
 import Condition from 'src/components/Condition';
 import { MainLoader } from 'src/components/Loader';
@@ -92,23 +92,32 @@ const Product = () => {
                                                 : 'n/a'}
                                         </span>
                                     </small>
-                                    <ActionButton
-                                        icon='fa fa-envelope'
-                                        label='Email'
-                                        style={{ padding: '0.1rem 0.3rem' }}
-                                        onClick={() => {}}
-                                    />
-                                    <ActionButton
-                                        icon='fa fa-copy'
-                                        label='Copy'
-                                        style={{ padding: '0.1rem 0.3rem' }}
-                                        onClick={() => {
-                                            navigator.clipboard.writeText(
-                                                product.owner_email
-                                            );
-                                            showInfo('Email address copied');
-                                        }}
-                                    />
+                                </>
+
+                                <>
+                                    <small className='d-block mt-3 mb-1'>
+                                        Interested? Contact the owner of this
+                                        post.
+                                    </small>
+
+                                    <Button
+                                        className='btn-sm btn-icon btn-2 transform-none shadow-none'
+                                        color='primary'
+                                        type='button'
+                                        title={
+                                            'Interested? Contact the owner of this post'
+                                        }
+                                    >
+                                        <span className=''>
+                                            <i className='fa fa-envelope' />
+                                        </span>
+                                        <span
+                                            className='btn-inner--text'
+                                            style={{ fontSize: '0.6rem' }}
+                                        >
+                                            Contact
+                                        </span>
+                                    </Button>
                                 </>
 
                                 <small className='d-block mt-4'>

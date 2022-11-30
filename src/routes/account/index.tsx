@@ -28,7 +28,7 @@ const AccountPage = () => {
                         <Card className='card-profile shadow'>
                             <div>
                                 <Row>
-                                    <Col className='order-lg-1' lg='3'>
+                                    {/* <Col className='order-lg-1' lg='3'>
                                         <div className='card-profile-image'>
                                             <a
                                                 href='#ola'
@@ -43,7 +43,7 @@ const AccountPage = () => {
                                                 />
                                             </a>
                                         </div>
-                                    </Col>
+                                    </Col> */}
 
                                     <Col className='order-lg-2' lg='3'>
                                         <div className='h5 mt-4'>

@@ -90,7 +90,7 @@ const SignIn = () => {
                     </CardBody>
                 </div>
                 <Row className='mt-3'>
-                    <Col xs='6'>
+                    {/* <Col xs='6'>
                         <a
                             className='text-light'
                             href='#pablo'
@@ -98,7 +98,7 @@ const SignIn = () => {
                         >
                             <small>Forgot password?</small>
                         </a>
-                    </Col>
+                    </Col> */}
                     <Col className='text-right' xs='6'>
                         <Link to={PAGE_URLS.SIGN_UP} className='text-light'>
                             <small>Create new account</small>
