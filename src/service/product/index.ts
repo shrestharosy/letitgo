@@ -1,10 +1,14 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import axiosInstance from '../axios';
-import { IProduct, IModifyProduct, ICategory } from './product.type';
+import { ICategory, IModifyProduct, IProduct } from './product.type';
 
-const fetchProducts = async () => {
+const fetchProducts = async (category? : string) => {
+    let url = `/products/`
+    if(category){
+        url = `${url}?category=${category}`
+    }
     const response: AxiosResponse<Array<IProduct>> = await axiosInstance.get(
-        `/products/`
+        url
     );
     return response.data;
 };

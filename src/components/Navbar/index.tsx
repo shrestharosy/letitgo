@@ -2,17 +2,12 @@ import { useEffect, useState } from 'react';
 import { Link, NavLink, useHistory } from 'react-router-dom';
 
 import {
-    UncontrolledCollapse,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
     Col,
-    Container,
-    Nav,
+    Container, DropdownItem, DropdownMenu, DropdownToggle, Nav,
     Navbar as NB,
     NavbarBrand,
-    Row,
+    Row, UncontrolledCollapse,
+    UncontrolledDropdown
 } from 'reactstrap';
 import { PAGE_URLS } from 'src/constants/route';
 import { USER } from 'src/constants/storage.constant';

@@ -1,28 +1,22 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import {
-    FormProvider,
+    Controller, FormProvider,
     SubmitHandler,
-    useForm,
-    Controller,
+    useForm
 } from 'react-hook-form';
 import ImageUploader from 'react-images-upload';
 import {
     Button,
     Card,
-    CardBody,
-    Form,
-    FormGroup,
-    Label,
-    Input,
-    Row,
-    Col,
+    CardBody, Col, Form,
+    FormGroup, Input, Label, Row
 } from 'reactstrap';
 import CustomInput from 'src/components/Forms/CustomInput';
 import {
     FILE_SIZE,
     PRODUCT_CONDITION,
-    SUPPORTED_FILE_FORMATS,
+    SUPPORTED_FILE_FORMATS
 } from 'src/constants/product.constant';
 import productSchema from 'src/libs/validation-schemas/product.schema';
 import { productService } from 'src/service/product';
@@ -152,11 +146,12 @@ const UploadProductForm = (props: IUploadProductFormProps) => {
                                                 <Label for='category'>
                                                     Category
                                                 </Label>
+                                                
                                                 <Input
                                                     type='select'
                                                     onChange={(e) =>
                                                         methods.setValue(
-                                                            'select',
+                                                            'category',
                                                             e.target.value,
                                                             {
                                                                 shouldValidate:

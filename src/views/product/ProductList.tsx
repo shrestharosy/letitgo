@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Col, Row, Badge } from 'reactstrap';
+import { Badge, Col, Row } from 'reactstrap';
 import { MainLoader } from 'src/components/Loader';
 import { PAGE_URLS } from 'src/constants/route';
 import {
     getProductConditionColor,
-    mapProductCondition,
+    mapProductCondition
 } from 'src/libs/utils/product.util';
 import { productService } from 'src/service/product';
 import { IProduct } from 'src/service/product/product.type';
@@ -17,8 +17,24 @@ const ProductList = () => {
     const { push } = useHistory();
 
     useEffect(() => {
-        getProducts();
+        // Promise.all([getProducts(), getProductCategories()]);
+        getProducts()
     }, []);
+
+    const [productCategories, setProductCategories] = useState<Array<string>>(
+        []
+    );
+   
+
+
+    // const getProductCategories = async () => {
+    //     try {
+    //         const response = await productService.fetchCategories();
+    //         setProductCategories(response.map((c) => c.name));
+    //     } catch (error) {
+    //         console.log(error.message);
+    //     }
+    // };
 
     const getProducts = async () => {
         try {
@@ -80,7 +96,9 @@ const ProductList = () => {
                                         color='primary'
                                         pill
                                     >
-                                        {product.category}
+                                       {product.category
+                                        
+                                        }
                                     </Badge>
                                     <Badge
                                         className='text-uppercase ml-2'

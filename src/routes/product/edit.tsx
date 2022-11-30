@@ -1,16 +1,16 @@
-import { Col, Row, Container } from 'reactstrap';
-import UploadProductForm from 'src/views/product/UploadProductForm';
-import { SubmitHandler } from 'react-hook-form';
-import { IModifyProduct, IProduct } from 'src/service/product/product.type';
-import { productService } from 'src/service/product';
-import { useNotify } from 'src/context/notify';
-import { useHistory, useParams } from 'react-router-dom';
-import { PAGE_URLS } from 'src/constants/route';
 import { useEffect, useState } from 'react';
+import { SubmitHandler } from 'react-hook-form';
+import { useHistory, useParams } from 'react-router-dom';
+import { Col, Container, Row } from 'reactstrap';
 import { MainLoader } from 'src/components/Loader';
-import storageUtilityInstance from 'src/libs/utils/storage.util';
+import { PAGE_URLS } from 'src/constants/route';
 import { USER } from 'src/constants/storage.constant';
+import { useNotify } from 'src/context/notify';
+import storageUtilityInstance from 'src/libs/utils/storage.util';
+import { productService } from 'src/service/product';
+import { IModifyProduct, IProduct } from 'src/service/product/product.type';
 import { IUserProfile } from 'src/service/user/user.type';
+import UploadProductForm from 'src/views/product/UploadProductForm';
 
 const EditProduct = () => {
     const { showSuccess, showError } = useNotify();
@@ -55,7 +55,8 @@ const EditProduct = () => {
 
     const onSubmit: SubmitHandler<IModifyProduct> = async (data) => {
         try {
-            await productService.updateProduct(product.id, data);
+            const { image, ...rest} = data;
+            await productService.updateProduct(product.id, rest);
             showSuccess('Item modified');
         } catch (error) {
             showError(error.message);

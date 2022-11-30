@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Badge, Col, Row, Button } from 'reactstrap';
-import ActionButton from 'src/components/Button';
+import { Badge, Button, Col, Row } from 'reactstrap';
 import Condition from 'src/components/Condition';
 import { MainLoader } from 'src/components/Loader';
+import { useAppContext } from 'src/context/auth.context';
 import { useNotify } from 'src/context/notify';
 import { productService } from 'src/service/product';
 import { IProduct } from 'src/service/product/product.type';
@@ -14,6 +14,8 @@ const Product = () => {
 
     const param: { productId?: string } = useParams();
     const { showInfo } = useNotify();
+
+    const { isLoggedIn } = useAppContext();
 
     useEffect(() => {
         const getProduct = async (id: string) => {
@@ -100,24 +102,47 @@ const Product = () => {
                                         post.
                                     </small>
 
+                                    {isLoggedIn 
+
+                                    ?
                                     <Button
-                                        className='btn-sm btn-icon btn-2 transform-none shadow-none'
-                                        color='primary'
-                                        type='button'
-                                        title={
-                                            'Interested? Contact the owner of this post'
-                                        }
+                                    className='btn-sm btn-icon btn-2 transform-none shadow-none'
+                                    color='primary'
+                                    type='button'
+                                    title={
+                                        'Interested? Contact the owner of this post'
+                                    }
+                                >
+                                    <span className=''>
+                                        <i className='fa fa-envelope' />
+                                    </span>
+                                    <span
+                                        className='btn-inner--text'
+                                        style={{ fontSize: '0.6rem' }}
                                     >
-                                        <span className=''>
-                                            <i className='fa fa-envelope' />
-                                        </span>
-                                        <span
-                                            className='btn-inner--text'
-                                            style={{ fontSize: '0.6rem' }}
-                                        >
-                                            Contact
-                                        </span>
-                                    </Button>
+                                        Contact
+                                    </span>
+                                </Button>:
+
+<Button
+className='btn-sm btn-icon btn-2 transform-none shadow-none'
+color='primary'
+type='button'
+
+>
+
+<span
+    className='btn-inner--text'
+    style={{ fontSize: '0.6rem' }}
+>
+    Log In to contact owner
+</span>
+</Button>
+
+
+                                    }
+
+                                   
                                 </>
 
                                 <small className='d-block mt-4'>
