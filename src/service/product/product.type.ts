@@ -23,4 +23,5 @@ export interface IModifyProduct extends IBaseProduct {
 
 export interface ICategory {
     name: string;
+    id:string;
 }

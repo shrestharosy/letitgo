@@ -55,8 +55,8 @@ const EditProduct = () => {
 
     const onSubmit: SubmitHandler<IModifyProduct> = async (data) => {
         try {
-            const { image, ...rest} = data;
-            await productService.updateProduct(product.id, rest);
+            // const { image, ...rest} = data;
+            await productService.updateProduct(product.id, data);
             showSuccess('Item modified');
         } catch (error) {
             showError(error.message);

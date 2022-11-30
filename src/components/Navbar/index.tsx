@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, NavLink, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import {
     Col,
@@ -14,14 +14,15 @@ import { USER } from 'src/constants/storage.constant';
 import { useAppContext } from 'src/context/auth.context';
 import storageUtilityInstance from 'src/libs/utils/storage.util';
 import { productService } from 'src/service/product';
+import { ICategory } from 'src/service/product/product.type';
 import { IUserProfile } from 'src/service/user/user.type';
 
 const Navbar = () => {
-    const { isLoggedIn } = useAppContext();
+    const { isLoggedIn, setCategory } = useAppContext();
 
     const { push } = useHistory();
 
-    const [productCategories, setProductCategories] = useState<Array<string>>(
+    const [productCategories, setProductCategories] = useState<Array<ICategory>>(
         []
     );
     const [userProfile, setUserProfile] = useState({} as IUserProfile);
@@ -30,7 +31,7 @@ const Navbar = () => {
         const getProductCategories = async () => {
             try {
                 const response = await productService.fetchCategories();
-                setProductCategories(response.map((c) => c.name));
+                setProductCategories(response);
             } catch (error) {
                 console.log(error.message);
             }
@@ -64,9 +65,9 @@ const Navbar = () => {
                             <div className='navbar-collapse-header'>
                                 <Row>
                                     <Col className='collapse-brand' xs='6'>
-                                        <NavLink to={PAGE_URLS.HOME}>
+                                        <span onClick={() => {setCategory('1'); push(PAGE_URLS.HOME)}}>
                                             LET IT GO
-                                        </NavLink>
+                                        </span>
                                     </Col>
                                     <Col className='collapse-close' xs='6'>
                                         <button
@@ -94,10 +95,10 @@ const Navbar = () => {
                                     <DropdownMenu>
                                         {productCategories.map((category) => (
                                             <DropdownItem
-                                                to={`/${category}`}
                                                 tag={Link}
+                                                onClick={() => {setCategory(category.id); push(`${PAGE_URLS.HOME}?category=${category.id}`)}}
                                             >
-                                                {category}
+                                                {category.name}
                                             </DropdownItem>
                                         ))}
                                     </DropdownMenu>

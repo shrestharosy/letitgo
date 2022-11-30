@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Badge, Col, Row } from 'reactstrap';
 import { MainLoader } from 'src/components/Loader';
 import { PAGE_URLS } from 'src/constants/route';
+import { useAppContext } from 'src/context/auth.context';
 import {
     getProductConditionColor,
     mapProductCondition
@@ -14,16 +15,15 @@ const ProductList = () => {
     const [products, setProducts] = useState<Array<IProduct>>([]);
     const [isLoading, setIsLoading] = useState(false);
 
+    const {category} = useAppContext()
+
     const { push } = useHistory();
 
     useEffect(() => {
         // Promise.all([getProducts(), getProductCategories()]);
         getProducts()
-    }, []);
+    }, [category]);
 
-    const [productCategories, setProductCategories] = useState<Array<string>>(
-        []
-    );
    
 
 
@@ -39,7 +39,7 @@ const ProductList = () => {
     const getProducts = async () => {
         try {
             setIsLoading(true);
-            const response = await productService.fetchProducts();
+            const response = await productService.fetchProducts(category == '1' ? null : category);
             setProducts(response);
         } catch (error) {
             console.log(error);
