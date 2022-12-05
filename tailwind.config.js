@@ -3,9 +3,9 @@
 module.exports = {
   mode: 'jit',
   content: [
-    './components/**/*.{js,ts,jsx,tsx}',
-    './routes/**/*.{js,ts,jsx,tsx}',
-    './views/**/*.{js,ts,jsx,tsx}',
+    'src/components/**/*.{js,ts,jsx,tsx}',
+    'src/routes/**/*.{js,ts,jsx,tsx}',
+    'src/views/**/*.{js,ts,jsx,tsx}',
   ],
   darkMode: 'class',
   theme: {
