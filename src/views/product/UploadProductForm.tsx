@@ -1,32 +1,27 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import {
-    FormProvider,
+    Controller, FormProvider,
     SubmitHandler,
-    useForm,
-    Controller,
+    useForm
 } from 'react-hook-form';
 import ImageUploader from 'react-images-upload';
+import Select from 'react-select';
 import {
     Button,
     Card,
-    CardBody,
-    Form,
-    FormGroup,
-    Label,
-    Input,
-    Row,
-    Col,
+    CardBody, Col, Form,
+    FormGroup, Input, Label, Row
 } from 'reactstrap';
 import CustomInput from 'src/components/Forms/CustomInput';
 import {
     FILE_SIZE,
     PRODUCT_CONDITION,
-    SUPPORTED_FILE_FORMATS,
+    SUPPORTED_FILE_FORMATS
 } from 'src/constants/product.constant';
 import productSchema from 'src/libs/validation-schemas/product.schema';
 import { productService } from 'src/service/product';
-import { IModifyProduct, IProduct } from 'src/service/product/product.type';
+import { IModifyProduct, IOption, IProduct } from 'src/service/product/product.type';
 
 interface IUploadProductFormProps {
     submitButtonLabel: string;
@@ -38,7 +33,7 @@ const UploadProductForm = (props: IUploadProductFormProps) => {
     const { submitButtonLabel, product, onSubmit } = props;
 
     const [localImage, setLocalImage] = useState(null);
-    const [productCategories, setProductCategories] = useState<Array<string>>(
+    const [productCategories, setProductCategories] = useState<Array<IOption>>(
         []
     );
 
@@ -56,7 +51,7 @@ const UploadProductForm = (props: IUploadProductFormProps) => {
         const getProductCategories = async () => {
             try {
                 const response = await productService.fetchCategories();
-                setProductCategories(response.map((c) => c.name));
+                setProductCategories(response.map(({name, id}) => ({label: name, value: id})));
             } catch (error) {
                 console.log(error.message);
             }
@@ -132,8 +127,8 @@ const UploadProductForm = (props: IUploadProductFormProps) => {
                                             typeof localImage === 'string'
                                                 ? localImage
                                                 : URL.createObjectURL(
-                                                      localImage
-                                                  )
+                                                    localImage
+                                                )
                                         }
                                         className={'image'}
                                     />
@@ -144,42 +139,23 @@ const UploadProductForm = (props: IUploadProductFormProps) => {
                         <Row>
                             <Col>
                                 <FormGroup>
-                                    <Controller
-                                        name='category'
-                                        control={methods.control}
-                                        render={({ field }) => (
-                                            <>
-                                                <Label for='category'>
-                                                    Category
-                                                </Label>
-                                                <Input
-                                                    type='select'
-                                                    onChange={(e) =>
-                                                        methods.setValue(
-                                                            'select',
-                                                            e.target.value,
-                                                            {
-                                                                shouldValidate:
-                                                                    true,
-                                                            }
-                                                        )
-                                                    }
-                                                    {...field}
-                                                >
-                                                    <option disabled selected>
-                                                        Select Category
-                                                    </option>
-                                                    {productCategories.map(
-                                                        (category) => (
-                                                            <option>
-                                                                {category}
-                                                            </option>
-                                                        )
-                                                    )}
-                                                </Input>
-                                            </>
-                                        )}
-                                    />
+                                <Controller
+                                    name="category"
+                                    control={methods.control}
+                                    render={({ field }) => (
+                                        <>
+                                            <Label for='category'>
+                                                Category
+                                            </Label>
+                                            <Select
+                                            {...field}
+                                            options={productCategories}
+                                            value={productCategories.find((category) => methods.getValues('category') === category.value)}
+                                            onChange={(e) => methods.setValue('category',e.value)}
+                                            />
+                                        </>
+                                    )}
+                                />
                                 </FormGroup>
                             </Col>
                             <Col>

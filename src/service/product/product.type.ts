@@ -18,9 +18,15 @@ export interface IProduct extends IBaseProduct {
 }
 
 export interface IModifyProduct extends IBaseProduct {
-    image: File;
+    image?: File;
 }
 
 export interface ICategory {
     name: string;
+    id:string;
+}
+
+export interface IOption{
+    label: string;
+    value: string;
 }

@@ -1,10 +1,21 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import axiosInstance from '../axios';
-import { IProduct, IModifyProduct, ICategory } from './product.type';
+import { ICategory, IModifyProduct, IProduct } from './product.type';
 
-const fetchProducts = async () => {
+const fetchProducts = async (category? : string, condition? : number) => {
+    let url = `/products/`
+    const filters = []
+    if(category){
+        filters.push(`category=${category}`)
+    }
+    if(condition){
+        filters.push(`condition=${condition}`)
+    }
+    if(filters){
+        url = `${url}?${filters.join("&")}`
+    }
     const response: AxiosResponse<Array<IProduct>> = await axiosInstance.get(
-        `/products/`
+        url
     );
     return response.data;
 };

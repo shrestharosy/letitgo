@@ -23,15 +23,17 @@ const MyProductList = () => {
         try {
             const user = storageUtilityInstance.getItem(USER) ?? null;
             if (user) {
+                const parsedUser = JSON.parse(user);
                 const response = await productService.fetchMyProducts(
-                    JSON.parse(user).id
+                    parsedUser.id
                 );
                 setProducts(response);
             } else {
-                showError('User id not found');
+                showError('Error while fetching products');
             }
         } catch (error) {
             console.log(error);
+            showError('Error while fetching products');
         } finally {
             setIsLoading(false);
         }
