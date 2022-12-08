@@ -7,11 +7,16 @@ import { useAppContext } from 'src/context/auth.context';
 import { useNotify } from 'src/context/notify';
 import {
     getProductConditionColor,
-    mapProductCondition
+    mapProductCondition,
 } from 'src/libs/utils/product.util';
 import { productService } from 'src/service/product';
-import { IProduct } from 'src/service/product/product.type';
+import { IOption, IProduct } from 'src/service/product/product.type';
 import SearchFilterProductForm from './SearchFilterProductForm';
+
+interface IFilterProps {
+    category: IOption;
+    condition: IOption;
+}
 
 const ProductList = () => {
     const { showError } = useNotify();
@@ -19,15 +24,14 @@ const ProductList = () => {
     const [products, setProducts] = useState<Array<IProduct>>([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    const {category} = useAppContext()
+    const { category } = useAppContext();
 
     const { push } = useHistory();
 
     useEffect(() => {
         // Promise.all([getProducts(), getProductCategories()]);
-        getProducts()
+        getProducts();
     }, [category]);
-
 
     // const getProductCategories = async () => {
     //     try {
@@ -38,11 +42,13 @@ const ProductList = () => {
     //     }
     // };
 
-    const submitFilter = async (data) => {
+    const submitFilter = async (data: IFilterProps) => {
         try {
-            debugger
-            const response = await productService.fetchProducts(data.category, data.condition);
-            setProducts(response)
+            const response = await productService.fetchProducts(
+                data?.category?.value,
+                +data?.condition?.value
+            );
+            setProducts(response);
         } catch (error) {
             showError(error.message);
         }
@@ -101,7 +107,8 @@ const ProductList = () => {
                                     <small>
                                         {Math.floor(+product.price) === 0
                                             ? 'Free'
-                                            : product.price && `$${product.price}`}
+                                            : product.price &&
+                                              `$${product.price}`}
                                     </small>
 
                                     <small className='d-block'>
@@ -119,7 +126,9 @@ const ProductList = () => {
                                             )}
                                             pill
                                         >
-                                            {mapProductCondition(product.condition)}
+                                            {mapProductCondition(
+                                                product.condition
+                                            )}
                                         </Badge>
                                     </small>
                                 </Col>

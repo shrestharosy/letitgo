@@ -3,11 +3,16 @@ import { Link, useHistory } from 'react-router-dom';
 
 import {
     Col,
-    Container, DropdownItem, DropdownMenu, DropdownToggle, Nav,
+    Container,
+    DropdownItem,
+    DropdownMenu,
+    DropdownToggle,
+    Nav,
     Navbar as NB,
     NavbarBrand,
-    Row, UncontrolledCollapse,
-    UncontrolledDropdown
+    Row,
+    UncontrolledCollapse,
+    UncontrolledDropdown,
 } from 'reactstrap';
 import { PAGE_URLS } from 'src/constants/route';
 import { USER } from 'src/constants/storage.constant';
@@ -22,9 +27,9 @@ const Navbar = () => {
 
     const { push } = useHistory();
 
-    const [productCategories, setProductCategories] = useState<Array<ICategory>>(
-        []
-    );
+    const [productCategories, setProductCategories] = useState<
+        Array<ICategory>
+    >([]);
     const [userProfile, setUserProfile] = useState({} as IUserProfile);
 
     useEffect(() => {
@@ -55,9 +60,13 @@ const Navbar = () => {
                     id='navbar-main'
                 >
                     <Container>
-                        <NavbarBrand className='mr-lg-5' to='/' tag={Link}>
+                        <div
+                            className='mr-lg-5 text-white cursor-pointer text-sm'
+                            style={{ cursor: 'pointer', fontSize: '1rem' }}
+                            onClick={() => window.location.replace('/')}
+                        >
                             LET IT GO
-                        </NavbarBrand>
+                        </div>
                         <button className='navbar-toggler' id='navbar_global'>
                             <span className='navbar-toggler-icon' />
                         </button>
@@ -65,7 +74,12 @@ const Navbar = () => {
                             <div className='navbar-collapse-header'>
                                 <Row>
                                     <Col className='collapse-brand' xs='6'>
-                                        <span onClick={() => {setCategory('1'); push(PAGE_URLS.HOME)}}>
+                                        <span
+                                            onClick={() => {
+                                                setCategory('1');
+                                                push(PAGE_URLS.HOME);
+                                            }}
+                                        >
                                             LET IT GO
                                         </span>
                                     </Col>
@@ -96,7 +110,12 @@ const Navbar = () => {
                                         {productCategories.map((category) => (
                                             <DropdownItem
                                                 tag={Link}
-                                                onClick={() => {setCategory(category.id); push(`${PAGE_URLS.HOME}?category=${category.id}`)}}
+                                                onClick={() => {
+                                                    setCategory(category.id);
+                                                    push(
+                                                        `${PAGE_URLS.HOME}?category=${category.id}`
+                                                    );
+                                                }}
                                             >
                                                 {category.name}
                                             </DropdownItem>

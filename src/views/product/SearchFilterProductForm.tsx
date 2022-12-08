@@ -7,12 +7,11 @@ import { productService } from 'src/service/product';
 import { IOption } from 'src/service/product/product.type';
 
 interface ISearchFilterProductFormProps {
-    onSubmit
+    onSubmit;
 }
 
-
 const SearchFilterProductForm = (props: ISearchFilterProductFormProps) => {
-    const {onSubmit} = props
+    const { onSubmit } = props;
 
     const [productCategories, setProductCategories] = useState<Array<IOption>>(
         []
@@ -22,7 +21,9 @@ const SearchFilterProductForm = (props: ISearchFilterProductFormProps) => {
         const getProductCategories = async () => {
             try {
                 const response = await productService.fetchCategories();
-                setProductCategories(response.map(({name, id}) => ({label: name, value: id})));
+                setProductCategories(
+                    response.map(({ name, id }) => ({ label: name, value: id }))
+                );
             } catch (error) {
                 console.log(error.message);
             }
@@ -32,15 +33,22 @@ const SearchFilterProductForm = (props: ISearchFilterProductFormProps) => {
 
     const { ...methods } = useForm({});
 
+    const mapProductconditions = Object.entries(PRODUCT_CONDITION).map(
+        (condition) => ({
+            value: condition[1],
+            label: condition[0],
+        })
+    );
+
     return (
-        <div className='flex flex-row'>
+        <div className='flex flex-row ml-6 mr-6 mt--3'>
             <FormProvider {...methods}>
                 <Form role='form'>
                     <Row>
-                        <Col>
+                        <Col md='3' lg='3'>
                             <FormGroup>
                                 <Controller
-                                    name="category"
+                                    name='category'
                                     control={methods.control}
                                     render={({ field }) => (
                                         <>
@@ -48,17 +56,31 @@ const SearchFilterProductForm = (props: ISearchFilterProductFormProps) => {
                                                 Category
                                             </Label>
                                             <Select
-                                            {...field}
-                                            options={productCategories}
-                                            value={productCategories.find((category) => methods.getValues('category') === category.value)}
-                                            onChange={(e) => methods.setValue('category',e.value)}
+                                                {...field}
+                                                isClearable={true}
+                                                isSearchable={false}
+                                                options={productCategories}
+                                                // value={productCategories.find(
+                                                //     (category) =>
+                                                //         methods.getValues(
+                                                //             'category'
+                                                //         ) === category.value
+                                                // )}
+                                                // onChange={(e) => {
+                                                //     if (!e) {
+                                                //     }
+                                                //     methods.setValue(
+                                                //         'category',
+                                                //         e.value
+                                                //     );
+                                                // }}
                                             />
                                         </>
                                     )}
                                 />
                             </FormGroup>
                         </Col>
-                        <Col>
+                        <Col md='3' lg='3'>
                             <FormGroup>
                                 <Controller
                                     name='condition'
@@ -68,7 +90,14 @@ const SearchFilterProductForm = (props: ISearchFilterProductFormProps) => {
                                             <Label for='condition'>
                                                 Condition
                                             </Label>
-                                            <Input
+                                            <Select
+                                                {...field}
+                                                isClearable={true}
+                                                isSearchable={false}
+                                                options={mapProductconditions}
+                                            />
+
+                                            {/* <Input
                                                 type='select'
                                                 onChange={(e) =>
                                                     methods.setValue(
@@ -93,27 +122,30 @@ const SearchFilterProductForm = (props: ISearchFilterProductFormProps) => {
                                                         label={condition[0]}
                                                     />
                                                 ))}
-                                            </Input>
+                                            </Input> */}
                                         </>
                                     )}
                                 />
                             </FormGroup>
                         </Col>
+                        <Col md='3' lg='3' style={{ marginTop: '26px' }}>
+                            <Button
+                                block
+                                className='btn-round'
+                                color='default'
+                                size='md'
+                                type='submit'
+                                onClick={methods.handleSubmit(onSubmit)}
+                            >
+                                <i className={'fa fa-search mr-2'} />
+                                Search
+                            </Button>
+                        </Col>
                     </Row>
                 </Form>
             </FormProvider>
-            <Button
-                block
-                className='btn-round'
-                color='default'
-                size='lg'
-                type='submit'
-                onClick={methods.handleSubmit(onSubmit)}
-            >
-                Search
-            </Button>
         </div>
-    )
-}
+    );
+};
 
 export default SearchFilterProductForm;

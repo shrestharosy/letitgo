@@ -23,10 +23,10 @@ export interface IModifyProduct extends IBaseProduct {
 
 export interface ICategory {
     name: string;
-    id:string;
+    id: string;
 }
 
-export interface IOption{
+export interface IOption {
     label: string;
     value: string;
 }
