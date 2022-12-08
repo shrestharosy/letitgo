@@ -1,23 +1,51 @@
-import { Link, NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
 import {
-    UncontrolledCollapse,
-    UncontrolledDropdown,
-    UncontrolledTooltip,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
     Col,
-    Container,
-    Nav,
+    Container, DropdownItem, DropdownMenu, DropdownToggle, Nav,
     Navbar as NB,
     NavbarBrand,
-    NavItem,
-    Row,
+    Row, UncontrolledCollapse,
+    UncontrolledDropdown
 } from 'reactstrap';
 import { PAGE_URLS } from 'src/constants/route';
+import { USER } from 'src/constants/storage.constant';
+import { useAppContext } from 'src/context/auth.context';
+import storageUtilityInstance from 'src/libs/utils/storage.util';
+import { productService } from 'src/service/product';
+import { ICategory } from 'src/service/product/product.type';
+import { IUserProfile } from 'src/service/user/user.type';
 
 const Navbar = () => {
+    const { isLoggedIn, setCategory } = useAppContext();
+
+    const { push } = useHistory();
+
+    const [productCategories, setProductCategories] = useState<Array<ICategory>>(
+        []
+    );
+    const [userProfile, setUserProfile] = useState({} as IUserProfile);
+
+    useEffect(() => {
+        const getProductCategories = async () => {
+            try {
+                const response = await productService.fetchCategories();
+                setProductCategories(response);
+            } catch (error) {
+                console.log(error.message);
+            }
+        };
+        getProductCategories();
+    }, []);
+
+    useEffect(() => {
+        const user = storageUtilityInstance.getItem(USER);
+        if (user) {
+            setUserProfile(JSON.parse(user));
+        }
+    }, [isLoggedIn]);
+
     return (
         <>
             <header className='header-global'>
@@ -37,9 +65,9 @@ const Navbar = () => {
                             <div className='navbar-collapse-header'>
                                 <Row>
                                     <Col className='collapse-brand' xs='6'>
-                                        <NavLink to={PAGE_URLS.HOME}>
+                                        <span onClick={() => {setCategory('1'); push(PAGE_URLS.HOME)}}>
                                             LET IT GO
-                                        </NavLink>
+                                        </span>
                                     </Col>
                                     <Col className='collapse-close' xs='6'>
                                         <button
@@ -65,48 +93,68 @@ const Navbar = () => {
                                         </span>
                                     </DropdownToggle>
                                     <DropdownMenu>
-                                        <DropdownItem to='/clothes' tag={Link}>
-                                            Clothes
-                                        </DropdownItem>
-                                        <DropdownItem
-                                            to='/furnitures'
-                                            tag={Link}
-                                        >
-                                            Furnitures
-                                        </DropdownItem>
-                                        <DropdownItem
-                                            to='/household'
-                                            tag={Link}
-                                        >
-                                            Household
-                                        </DropdownItem>
+                                        {productCategories.map((category) => (
+                                            <DropdownItem
+                                                tag={Link}
+                                                onClick={() => {setCategory(category.id); push(`${PAGE_URLS.HOME}?category=${category.id}`)}}
+                                            >
+                                                {category.name}
+                                            </DropdownItem>
+                                        ))}
                                     </DropdownMenu>
                                 </UncontrolledDropdown>
                             </Nav>
 
                             <Nav
-                                className='align-items-lg-center ml-lg-auto'
+                                className='navbar-nav-hover align-items-lg-center ml-lg-auto'
                                 navbar
                             >
-                                <NavItem>
-                                    <NavLink
-                                        className='nav-link-icon'
-                                        id='tooltip333589074'
-                                        to={PAGE_URLS.SIGN_IN}
+                                <UncontrolledDropdown>
+                                    <DropdownToggle
+                                        nav
+                                        onClick={() => {
+                                            isLoggedIn
+                                                ? push(PAGE_URLS.USER.ACCOUNT)
+                                                : push(PAGE_URLS.SIGN_IN);
+                                        }}
                                     >
-                                        <i className='fa fa-user' />
-                                        <span className='nav-link-inner--text d-lg-none ml-2'>
-                                            Account
-                                        </span>
-                                        <UncontrolledTooltip
-                                            delay={0}
-                                            target='tooltip333589074'
-                                        >
-                                            Account
-                                        </UncontrolledTooltip>
-                                    </NavLink>
-                                </NavItem>
+                                        <>
+                                            {/* <i className='fa fa-user mr-1' /> */}
+                                            <span className='nav-link-inner--text'>
+                                                Account
+                                            </span>
+                                        </>
+                                    </DropdownToggle>
+                                </UncontrolledDropdown>
                             </Nav>
+
+                            {isLoggedIn && (
+                                <>
+                                    <Nav
+                                        className='navbar-nav-hover align-items-lg-center'
+                                        navbar
+                                    >
+                                        <UncontrolledDropdown nav>
+                                            <DropdownToggle nav>
+                                                <i className='fa fa-user mr-1' />
+
+                                                <span className='nav-link-inner--text'>
+                                                    {userProfile?.first_name}{' '}
+                                                    {userProfile?.last_name}
+                                                </span>
+                                            </DropdownToggle>
+                                            <DropdownMenu>
+                                                <DropdownItem
+                                                    to={PAGE_URLS.SIGN_OUT}
+                                                    tag={Link}
+                                                >
+                                                    Sign Out
+                                                </DropdownItem>
+                                            </DropdownMenu>
+                                        </UncontrolledDropdown>
+                                    </Nav>
+                                </>
+                            )}
                         </UncontrolledCollapse>
                     </Container>
                 </NB>

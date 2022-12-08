@@ -4,7 +4,7 @@ interface IBlueBGWrapperProps {
 
 const BlueBGWrapper = (props: IBlueBGWrapperProps) => {
     return (
-        <section className='section section-shaped section-lg'>
+        <>
             <div className='shape shape-style-1 bg-gradient-default'>
                 <span />
                 <span />
@@ -16,7 +16,7 @@ const BlueBGWrapper = (props: IBlueBGWrapperProps) => {
                 <span />
             </div>
             {props.children}
-        </section>
+        </>
     );
 };
 

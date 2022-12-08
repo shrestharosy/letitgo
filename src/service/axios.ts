@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import parseErrorMessage from './error';
-import storageUtilityInstance from 'src/libs/utils/storage';
-import { ACCESS_TOKEN } from 'src/constants/storage';
+import storageUtilityInstance from 'src/libs/utils/storage.util';
+import { ACCESS_TOKEN } from 'src/constants/storage.constant';
 import Config from 'src/config';
 
 const axiosInstance = axios.create({
@@ -10,9 +10,9 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-    let accessToken = storageUtilityInstance.getCookie(ACCESS_TOKEN);
+    let accessToken = storageUtilityInstance.getItem(ACCESS_TOKEN);
     if (accessToken) {
-        config.headers['Authorization'] = `Bearer ${accessToken}`;
+        config.headers['Authorization'] = `Token ${accessToken}`;
         return config;
     } else {
         return config;

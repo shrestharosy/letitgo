@@ -21,6 +21,7 @@ $gray-600: #8898aa !default; // Line footer color
 $gray-700: #525f7f !default; // Line p color
 $gray-800: #32325d !default; // Line heading color
 $gray-900: #212529 !default;
+$gray-1000: #4a4a4a !default;
 $black: #000 !default;
 
 $grays: (
@@ -97,6 +98,7 @@ $theme-colors: map-merge(("default": $default,
       "warning": $warning,
       "danger": $danger,
       "white": $white,
+      "yellow": $yellow,
       "neutral": $white,
       "dark": $dark,
       "darker": $darker), $theme-colors

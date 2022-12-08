@@ -1,4 +1,9 @@
-import { ISignIn, ISignUp, ISignUpResponse } from './auth.type';
+import {
+    ISignIn,
+    ISignUp,
+    ISignUpResponse,
+    ISignInResponse,
+} from './auth.type';
 import { AxiosResponse } from 'axios';
 import axiosInstance from '../axios';
 
@@ -22,7 +27,10 @@ const signUp = async (data: ISignUp) => {
 };
 
 const signIn = async (data: ISignIn) => {
-    const response = await axiosInstance.post(`auth/signin/`, { ...data });
+    const response: AxiosResponse<ISignInResponse> = await axiosInstance.post(
+        `auth/signin/`,
+        { ...data }
+    );
     return response.data;
 };
 
