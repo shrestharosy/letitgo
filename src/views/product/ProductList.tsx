@@ -45,7 +45,7 @@ const ProductList = () => {
     const submitFilter = async (data: IFilterProps) => {
         try {
             const response = await productService.fetchProducts(
-                data?.category?.value,
+                data?.category?.value.toString(),
                 +data?.condition?.value
             );
             setProducts(response);

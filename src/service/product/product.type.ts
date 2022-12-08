@@ -18,7 +18,7 @@ export interface IProduct extends IBaseProduct {
 }
 
 export interface IModifyProduct extends IBaseProduct {
-    image?: File;
+    image?: File | string;
 }
 
 export interface ICategory {
@@ -28,5 +28,5 @@ export interface ICategory {
 
 export interface IOption {
     label: string;
-    value: string;
+    value: string | number;
 }

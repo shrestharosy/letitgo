@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 
-import { InputGroup, Input, InputGroupAddon, InputGroupText } from 'reactstrap';
+import { InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 
-import { useFormContext, UseControllerProps } from 'react-hook-form';
+import { UseControllerProps, useFormContext } from 'react-hook-form';
 
 interface ICustomInputProps extends UseControllerProps {
     name: string;
@@ -27,7 +27,7 @@ const CustomInput = (props: ICustomInputProps) => {
     return (
         <>
             {label && <label htmlFor={name}>{label}</label>}
-            <InputGroup className='input-group-alternative mb-3'>
+            <InputGroup>
                 {labelIcon && (
                     <InputGroupAddon addonType='prepend'>
                         <InputGroupText>
@@ -43,13 +43,13 @@ const CustomInput = (props: ICustomInputProps) => {
                     type={type}
                     {...register(name)}
                 />
-                {hasError && (
-                    <div className='invalid-feedback'>
-                        {(formState.errors[name]?.message as ReactNode) ||
-                            'Invalid value'}
-                    </div>
-                )}
             </InputGroup>
+            {hasError && (
+                <div className='invalid-feedback' style={{ display: 'block' }}>
+                    {(formState.errors[name]?.message as ReactNode) ||
+                        'Invalid value'}
+                </div>
+            )}
         </>
     );
 };

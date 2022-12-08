@@ -1,27 +1,28 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import {
-    Controller, FormProvider,
+    Controller,
+    FormProvider,
     SubmitHandler,
-    useForm
+    useForm,
 } from 'react-hook-form';
 import ImageUploader from 'react-images-upload';
-import Select from 'react-select';
-import {
-    Button,
-    Card,
-    CardBody, Col, Form,
-    FormGroup, Input, Label, Row
-} from 'reactstrap';
+import { Button, Card, CardBody, Col, Form, FormGroup, Row } from 'reactstrap';
 import CustomInput from 'src/components/Forms/CustomInput';
+import CustomSelect from 'src/components/Forms/CustomSelect';
+import Loader from 'src/components/Loader';
 import {
     FILE_SIZE,
     PRODUCT_CONDITION,
-    SUPPORTED_FILE_FORMATS
+    SUPPORTED_FILE_FORMATS,
 } from 'src/constants/product.constant';
 import productSchema from 'src/libs/validation-schemas/product.schema';
 import { productService } from 'src/service/product';
-import { IModifyProduct, IOption, IProduct } from 'src/service/product/product.type';
+import {
+    IModifyProduct,
+    IOption,
+    IProduct,
+} from 'src/service/product/product.type';
 
 interface IUploadProductFormProps {
     submitButtonLabel: string;
@@ -37,7 +38,7 @@ const UploadProductForm = (props: IUploadProductFormProps) => {
         []
     );
 
-    const { ...methods } = useForm({
+    const { ...methods } = useForm<IModifyProduct>({
         resolver: yupResolver(productSchema),
     });
 
@@ -51,7 +52,9 @@ const UploadProductForm = (props: IUploadProductFormProps) => {
         const getProductCategories = async () => {
             try {
                 const response = await productService.fetchCategories();
-                setProductCategories(response.map(({name, id}) => ({label: name, value: id})));
+                setProductCategories(
+                    response.map(({ name, id }) => ({ label: name, value: id }))
+                );
             } catch (error) {
                 console.log(error.message);
             }
@@ -60,9 +63,16 @@ const UploadProductForm = (props: IUploadProductFormProps) => {
     }, []);
 
     useEffect(() => {
-        methods.reset(product);
-        setLocalImage(product?.image);
-    }, [product]);
+        if (productCategories.length > 0 && product) {
+            methods.reset({
+                ...product,
+                category: productCategories
+                    .find((category) => category?.label === product.category)
+                    ?.value.toString(),
+            });
+            setLocalImage(product?.image);
+        }
+    }, [product, productCategories]);
 
     return (
         <Card className='bg-gradient-secondary shadow'>
@@ -127,8 +137,8 @@ const UploadProductForm = (props: IUploadProductFormProps) => {
                                             typeof localImage === 'string'
                                                 ? localImage
                                                 : URL.createObjectURL(
-                                                    localImage
-                                                )
+                                                      localImage
+                                                  )
                                         }
                                         className={'image'}
                                     />
@@ -139,23 +149,19 @@ const UploadProductForm = (props: IUploadProductFormProps) => {
                         <Row>
                             <Col>
                                 <FormGroup>
-                                <Controller
-                                    name="category"
-                                    control={methods.control}
-                                    render={({ field }) => (
-                                        <>
-                                            <Label for='category'>
-                                                Category
-                                            </Label>
-                                            <Select
-                                            {...field}
-                                            options={productCategories}
-                                            value={productCategories.find((category) => methods.getValues('category') === category.value)}
-                                            onChange={(e) => methods.setValue('category',e.value)}
-                                            />
-                                        </>
-                                    )}
-                                />
+                                    <Controller
+                                        name='category'
+                                        control={methods.control}
+                                        render={({ field }) => (
+                                            <>
+                                                <CustomSelect
+                                                    label='Category'
+                                                    name='category'
+                                                    options={productCategories}
+                                                />
+                                            </>
+                                        )}
+                                    />
                                 </FormGroup>
                             </Col>
                             <Col>
@@ -179,7 +185,17 @@ const UploadProductForm = (props: IUploadProductFormProps) => {
                                         control={methods.control}
                                         render={({ field }) => (
                                             <>
-                                                <Label for='condition'>
+                                                <CustomSelect
+                                                    label='Condition'
+                                                    name='condition'
+                                                    options={Object.entries(
+                                                        PRODUCT_CONDITION
+                                                    ).map((condition) => ({
+                                                        value: condition[1],
+                                                        label: condition[0],
+                                                    }))}
+                                                />
+                                                {/* <Label for='condition'>
                                                     Condition
                                                 </Label>
                                                 <Input
@@ -207,7 +223,7 @@ const UploadProductForm = (props: IUploadProductFormProps) => {
                                                             label={condition[0]}
                                                         />
                                                     ))}
-                                                </Input>
+                                                </Input> */}
                                             </>
                                         )}
                                     />
@@ -224,9 +240,14 @@ const UploadProductForm = (props: IUploadProductFormProps) => {
                         color='default'
                         size='lg'
                         type='submit'
+                        disabled={methods.formState.isSubmitting}
                         onClick={methods.handleSubmit(onSubmit)}
                     >
-                        {submitButtonLabel}
+                        {methods.formState.isSubmitting ? (
+                            <Loader />
+                        ) : (
+                            submitButtonLabel
+                        )}
                     </Button>
                 </div>
             </CardBody>
