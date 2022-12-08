@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Container, Row } from 'reactstrap';
 import { MainLoader } from 'src/components/Loader';
 import ProductRow from 'src/components/ProductRow';
-import { USER } from 'src/constants/storage.constant';
+import { MY_ITEMS, USER } from 'src/constants/storage.constant';
 import { useNotify } from 'src/context/notify';
 import storageUtilityInstance from 'src/libs/utils/storage.util';
 import { productService } from 'src/service/product';
@@ -15,10 +15,10 @@ const MyProductList = () => {
     const { showError } = useNotify();
 
     useEffect(() => {
-        getProducts();
+        getMyProducts();
     }, []);
 
-    const getProducts = async () => {
+    const getMyProducts = async () => {
         setIsLoading(true);
         try {
             const user = storageUtilityInstance.getItem(USER) ?? null;
@@ -28,6 +28,11 @@ const MyProductList = () => {
                     parsedUser.id
                 );
                 setProducts(response);
+                const myProducts = response.map((product) => product.id);
+                storageUtilityInstance.setItem(
+                    MY_ITEMS,
+                    myProducts.length > 0 ? JSON.stringify(myProducts) : ''
+                );
             } else {
                 showError('Error while fetching products');
             }
@@ -56,7 +61,7 @@ const MyProductList = () => {
                         <ProductRow
                             key={product.id}
                             product={product}
-                            getProducts={getProducts}
+                            getProducts={getMyProducts}
                         />
                     ))}
             </Row>

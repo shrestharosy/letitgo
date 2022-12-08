@@ -100,6 +100,13 @@ const fetchCategories = async () => {
     return response.data;
 };
 
+const contactProductOwner = async (productId: string) => {
+    const response: AxiosResponse<Array<ICategory>> = await axiosInstance.patch(
+        `products/${productId}/contact/`
+    );
+    return response.data;
+};
+
 export const productService = {
     fetchProducts,
     fetchMyProducts,
@@ -108,4 +115,5 @@ export const productService = {
     updateProduct,
     deleteProduct,
     fetchCategories,
+    contactProductOwner,
 };

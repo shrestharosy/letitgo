@@ -45,7 +45,7 @@ const AccountPage = () => {
                                         </div>
                                     </Col> */}
 
-                                    <Col className='order-lg-2' lg='3'>
+                                    <Col className='order-lg-2' lg='4'>
                                         <div className='h5 mt-4'>
                                             <i className='ni business_briefcase-24 mr-2' />
                                             {userProfile?.first_name}{' '}

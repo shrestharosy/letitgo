@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import {
     Button,
     CardBody,
@@ -31,6 +31,8 @@ const SignUp = () => {
 
     const { showSuccess, showError } = useNotify();
 
+    const { push } = useHistory();
+
     const { ...methods } = useForm({
         resolver: yupResolver(signUpSchema),
     });
@@ -40,6 +42,7 @@ const SignUp = () => {
             setIsLoading(true);
             await authService.signUp(data);
             showSuccess('Account created successfully');
+            push(PAGE_URLS.SIGN_IN);
         } catch (error) {
             showError(error);
         } finally {

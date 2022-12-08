@@ -1,19 +1,24 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Badge, Button, Col, Row } from 'reactstrap';
 import Condition from 'src/components/Condition';
 import { MainLoader } from 'src/components/Loader';
+import { PAGE_URLS } from 'src/constants/route';
+import { MY_ITEMS } from 'src/constants/storage.constant';
 import { useAppContext } from 'src/context/auth.context';
 import { useNotify } from 'src/context/notify';
+import storageUtilityInstance from 'src/libs/utils/storage.util';
 import { productService } from 'src/service/product';
 import { IProduct } from 'src/service/product/product.type';
 
 const Product = () => {
     const [product, setProduct] = useState<IProduct>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [isMyProduct, setIsMyProduct] = useState(false);
 
     const param: { productId?: string } = useParams();
-    const { showInfo } = useNotify();
+    const { showInfo, showError } = useNotify();
+    const { push } = useHistory();
 
     const { isLoggedIn } = useAppContext();
 
@@ -34,6 +39,26 @@ const Product = () => {
             getProduct(param.productId);
         }
     }, [param?.productId]);
+
+    const myProductListIds = storageUtilityInstance.getItem(MY_ITEMS);
+    const parsedProductListIds = myProductListIds
+        ? JSON.parse(myProductListIds)
+        : [];
+
+    useEffect(() => {
+        if (parsedProductListIds.includes(product?.id)) {
+            setIsMyProduct(true);
+        }
+    }, [product?.id]);
+
+    const requestContact = async () => {
+        try {
+            await productService.contactProductOwner(product.id);
+            showInfo('An email has been sent to the owner');
+        } catch (error) {
+            showError('Error while contacting owner');
+        }
+    };
 
     return (
         <>
@@ -102,47 +127,44 @@ const Product = () => {
                                         post.
                                     </small>
 
-                                    {isLoggedIn 
-
-                                    ?
-                                    <Button
-                                    className='btn-sm btn-icon btn-2 transform-none shadow-none'
-                                    color='primary'
-                                    type='button'
-                                    title={
-                                        'Interested? Contact the owner of this post'
-                                    }
-                                >
-                                    <span className=''>
-                                        <i className='fa fa-envelope' />
-                                    </span>
-                                    <span
-                                        className='btn-inner--text'
-                                        style={{ fontSize: '0.6rem' }}
-                                    >
-                                        Contact
-                                    </span>
-                                </Button>:
-
-<Button
-className='btn-sm btn-icon btn-2 transform-none shadow-none'
-color='primary'
-type='button'
-
->
-
-<span
-    className='btn-inner--text'
-    style={{ fontSize: '0.6rem' }}
->
-    Log In to contact owner
-</span>
-</Button>
-
-
-                                    }
-
-                                   
+                                    {isLoggedIn ? (
+                                        <Button
+                                            className='btn-sm btn-icon btn-2 transform-none shadow-none'
+                                            color='primary'
+                                            type='button'
+                                            disabled={isMyProduct}
+                                            title={
+                                                'Interested? Contact the owner of this post'
+                                            }
+                                            onClick={() => requestContact()}
+                                        >
+                                            <span className=''>
+                                                <i className='fa fa-envelope' />
+                                            </span>
+                                            <span
+                                                className='btn-inner--text'
+                                                style={{ fontSize: '0.6rem' }}
+                                            >
+                                                Contact
+                                            </span>
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            className='btn-sm btn-icon btn-2 transform-none shadow-none'
+                                            color='primary'
+                                            type='button'
+                                            onClick={() =>
+                                                push(PAGE_URLS.SIGN_IN)
+                                            }
+                                        >
+                                            <span
+                                                className='btn-inner--text'
+                                                style={{ fontSize: '0.6rem' }}
+                                            >
+                                                Log In to contact owner
+                                            </span>
+                                        </Button>
+                                    )}
                                 </>
 
                                 <small className='d-block mt-4'>
