@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import Select from 'react-select';
-import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
+import { Button, Col, Form, FormGroup, Label, Row } from 'reactstrap';
 import { PRODUCT_CONDITION } from 'src/constants/product.constant';
 import { productService } from 'src/service/product';
 import { IOption } from 'src/service/product/product.type';
 
-interface ISearchFilterProductFormProps {
+interface IFilterProductFormProps {
     onSubmit;
 }
 
-const SearchFilterProductForm = (props: ISearchFilterProductFormProps) => {
+const FilterProductForm = (props: IFilterProductFormProps) => {
     const { onSubmit } = props;
 
     const [productCategories, setProductCategories] = useState<Array<IOption>>(
@@ -45,6 +45,31 @@ const SearchFilterProductForm = (props: ISearchFilterProductFormProps) => {
             <FormProvider {...methods}>
                 <Form role='form'>
                     <Row>
+                        <Col md='4' lg='4' style={{ marginTop: '26px' }}>
+                            <FormGroup>
+                                {/* <input
+                                    className={`form-control`}
+                                    placeholder={'Search...'}
+                                    type={'text'}
+                                    onChange={() => {}}
+                                    {...methods.register('search')}
+                                /> */}
+                                <Controller
+                                    name='search'
+                                    control={methods.control}
+                                    render={({ field }) => (
+                                        <>
+                                            <input
+                                                className={`form-control`}
+                                                placeholder={'Search'}
+                                                type={'text'}
+                                                {...field}
+                                            />
+                                        </>
+                                    )}
+                                />
+                            </FormGroup>
+                        </Col>
                         <Col md='3' lg='3'>
                             <FormGroup>
                                 <Controller
@@ -60,20 +85,6 @@ const SearchFilterProductForm = (props: ISearchFilterProductFormProps) => {
                                                 isClearable={true}
                                                 isSearchable={false}
                                                 options={productCategories}
-                                                // value={productCategories.find(
-                                                //     (category) =>
-                                                //         methods.getValues(
-                                                //             'category'
-                                                //         ) === category.value
-                                                // )}
-                                                // onChange={(e) => {
-                                                //     if (!e) {
-                                                //     }
-                                                //     methods.setValue(
-                                                //         'category',
-                                                //         e.value
-                                                //     );
-                                                // }}
                                             />
                                         </>
                                     )}
@@ -128,7 +139,7 @@ const SearchFilterProductForm = (props: ISearchFilterProductFormProps) => {
                                 />
                             </FormGroup>
                         </Col>
-                        <Col md='3' lg='3' style={{ marginTop: '26px' }}>
+                        <Col md='2' lg='2' style={{ marginTop: '26px' }}>
                             <Button
                                 block
                                 className='btn-round'
@@ -137,8 +148,8 @@ const SearchFilterProductForm = (props: ISearchFilterProductFormProps) => {
                                 type='submit'
                                 onClick={methods.handleSubmit(onSubmit)}
                             >
-                                <i className={'fa fa-search mr-2'} />
-                                Search
+                                <i className={'fa fa-filter mr-2'} />
+                                Apply
                             </Button>
                         </Col>
                     </Row>
@@ -148,4 +159,4 @@ const SearchFilterProductForm = (props: ISearchFilterProductFormProps) => {
     );
 };
 
-export default SearchFilterProductForm;
+export default FilterProductForm;

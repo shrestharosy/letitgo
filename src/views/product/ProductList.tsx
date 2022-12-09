@@ -11,9 +11,10 @@ import {
 } from 'src/libs/utils/product.util';
 import { productService } from 'src/service/product';
 import { IOption, IProduct } from 'src/service/product/product.type';
-import SearchFilterProductForm from './SearchFilterProductForm';
+import FilterProductForm from './SearchFilterProductForm';
 
 interface IFilterProps {
+    search: string;
     category: IOption;
     condition: IOption;
 }
@@ -44,9 +45,11 @@ const ProductList = () => {
 
     const submitFilter = async (data: IFilterProps) => {
         try {
+            const { category = null, condition = null, search = null } = data;
             const response = await productService.fetchProducts(
-                data?.category?.value.toString(),
-                +data?.condition?.value
+                category?.value.toString(),
+                +condition?.value,
+                search
             );
             setProducts(response);
         } catch (error) {
@@ -68,7 +71,7 @@ const ProductList = () => {
 
     return (
         <div>
-            {<SearchFilterProductForm onSubmit={submitFilter} />}
+            {<FilterProductForm onSubmit={submitFilter} />}
             <section className='section section-lg'>
                 <div className={'card'}>
                     <Row className='justify-content-center'>

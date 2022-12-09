@@ -2,7 +2,11 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import axiosInstance from '../axios';
 import { ICategory, IModifyProduct, IProduct } from './product.type';
 
-const fetchProducts = async (category?: string, condition?: number) => {
+const fetchProducts = async (
+    category?: string,
+    condition?: number,
+    search?: string
+) => {
     let url = `/products/`;
     const filters = [];
     if (category) {
@@ -10,6 +14,9 @@ const fetchProducts = async (category?: string, condition?: number) => {
     }
     if (condition) {
         filters.push(`condition=${condition}`);
+    }
+    if (search) {
+        filters.push(`search=${search}`);
     }
     if (filters) {
         url = `${url}?${filters.join('&')}`;
