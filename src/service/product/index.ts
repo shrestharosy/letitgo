@@ -5,7 +5,8 @@ import { ICategory, IModifyProduct, IProduct } from './product.type';
 const fetchProducts = async (
     category?: string,
     condition?: number,
-    search?: string
+    search?: string,
+    verified?: string
 ) => {
     let url = `/products/`;
     const filters = [];
@@ -17,6 +18,9 @@ const fetchProducts = async (
     }
     if (search) {
         filters.push(`search=${search}`);
+    }
+    if (verified) {
+        filters.push(`verified=${verified}`);
     }
     if (filters) {
         url = `${url}?${filters.join('&')}`;

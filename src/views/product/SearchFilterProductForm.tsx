@@ -10,6 +10,17 @@ interface IFilterProductFormProps {
     onSubmit;
 }
 
+const PRODUCT_STATUS_OPTIONS: Array<IOption> = [
+    {
+        label: 'Verified',
+        value: 'true',
+    },
+    {
+        label: 'Not Verified',
+        value: 'false',
+    },
+];
+
 const FilterProductForm = (props: IFilterProductFormProps) => {
     const { onSubmit } = props;
 
@@ -70,7 +81,7 @@ const FilterProductForm = (props: IFilterProductFormProps) => {
                                 />
                             </FormGroup>
                         </Col>
-                        <Col md='3' lg='3'>
+                        <Col md='2' lg='2'>
                             <FormGroup>
                                 <Controller
                                     name='category'
@@ -91,7 +102,7 @@ const FilterProductForm = (props: IFilterProductFormProps) => {
                                 />
                             </FormGroup>
                         </Col>
-                        <Col md='3' lg='3'>
+                        <Col md='2' lg='2'>
                             <FormGroup>
                                 <Controller
                                     name='condition'
@@ -139,7 +150,28 @@ const FilterProductForm = (props: IFilterProductFormProps) => {
                                 />
                             </FormGroup>
                         </Col>
-                        <Col md='2' lg='2' style={{ marginTop: '26px' }}>
+                        <Col md='2' lg='2'>
+                            <FormGroup>
+                                <Controller
+                                    name='verified'
+                                    control={methods.control}
+                                    render={({ field }) => (
+                                        <>
+                                            <Label for='condition'>
+                                                Status
+                                            </Label>
+                                            <Select
+                                                {...field}
+                                                isClearable={true}
+                                                isSearchable={false}
+                                                options={PRODUCT_STATUS_OPTIONS}
+                                            />
+                                        </>
+                                    )}
+                                />
+                            </FormGroup>
+                        </Col>
+                        <Col md='1' lg='1' style={{ marginTop: '26px' }}>
                             <Button
                                 block
                                 className='btn-round'
