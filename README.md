@@ -1,4 +1,13 @@
+#Live Demo
+The project is available at [https://letitgo.vercel.app/](https://letitgo.vercel.app/)
+
 # Getting Started
+
+## Prerequisites
+
+Install [NPM](https://www.npmjs.com/) and [Node.js](https://nodejs.org/en/download/)
+
+Install [yarn](https://classic.yarnpkg.com/en/docs/install#debian-stable)
 
 In the project directory, you can run:
 
