@@ -1,4 +1,4 @@
-#Live Demo
+## Live Demo
 The project is available at [https://letitgo.vercel.app/](https://letitgo.vercel.app/)
 
 # Getting Started
