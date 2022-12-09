@@ -1,6 +1,6 @@
 import { useAppContext } from 'src/context/auth.context';
 import { useHistory } from 'react-router-dom';
-import { ACCESS_TOKEN, USER } from 'src/constants/storage.constant';
+import { ACCESS_TOKEN, MY_ITEMS, USER } from 'src/constants/storage.constant';
 import storageUtilityInstance from 'src/libs/utils/storage.util';
 import { useNotify } from 'src/context/notify';
 import { useState } from 'react';
@@ -34,6 +34,8 @@ const useAuthHook = () => {
 
     const onSignOut = () => {
         storageUtilityInstance.removeItem(ACCESS_TOKEN);
+        storageUtilityInstance.removeItem(USER);
+        storageUtilityInstance.removeItem(MY_ITEMS);
         setIsLoggedIn(false);
     };
 
