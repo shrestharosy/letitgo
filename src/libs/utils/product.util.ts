@@ -22,3 +22,7 @@ export const getProductConditionColor = (condition: number) => {
             return '';
     }
 };
+
+export const toBoolean = (string) => {
+    return string === 'true';
+};

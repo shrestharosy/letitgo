@@ -3,6 +3,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Badge, Button, Col, Row } from 'reactstrap';
 import Condition from 'src/components/Condition';
 import { MainLoader } from 'src/components/Loader';
+import VerifiedBadge from 'src/components/VerifiedBadge';
 import { PAGE_URLS } from 'src/constants/route';
 import { MY_ITEMS } from 'src/constants/storage.constant';
 import { useAppContext } from 'src/context/auth.context';
@@ -86,6 +87,7 @@ const Product = () => {
                             <Col lg={6} md={6} sm={4}>
                                 <small className='d-block mt-4 product-title'>
                                     {product.title}
+                                    {product.verified && <VerifiedBadge />}
                                 </small>
                                 <small className='d-block mt-2 product-price'>
                                     {Math.floor(+product.price) === 0

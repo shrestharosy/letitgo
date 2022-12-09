@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Badge, Col, Row } from 'reactstrap';
 import { MainLoader } from 'src/components/Loader';
+import VerifiedBadge from 'src/components/VerifiedBadge';
 import { PAGE_URLS } from 'src/constants/route';
 import { useAppContext } from 'src/context/auth.context';
 import { useNotify } from 'src/context/notify';
@@ -17,6 +18,7 @@ interface IFilterProps {
     search: string;
     category: IOption;
     condition: IOption;
+    verified: IOption;
 }
 
 const ProductList = () => {
@@ -45,11 +47,17 @@ const ProductList = () => {
 
     const submitFilter = async (data: IFilterProps) => {
         try {
-            const { category = null, condition = null, search = null } = data;
+            const {
+                category = null,
+                condition = null,
+                search = null,
+                verified = null,
+            } = data;
             const response = await productService.fetchProducts(
                 category?.value.toString(),
                 +condition?.value,
-                search
+                search,
+                verified?.value as string
             );
             setProducts(response);
         } catch (error) {
@@ -133,6 +141,7 @@ const ProductList = () => {
                                                 product.condition
                                             )}
                                         </Badge>
+                                        {product.verified && <VerifiedBadge />}
                                     </small>
                                 </Col>
                             ))}
