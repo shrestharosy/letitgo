@@ -6,6 +6,7 @@ import { MainLoader } from 'src/components/Loader';
 import { PAGE_URLS } from 'src/constants/route';
 import { USER } from 'src/constants/storage.constant';
 import { useNotify } from 'src/context/notify';
+import withProtectedPage from 'src/libs/hoc/withProtectedPage';
 import storageUtilityInstance from 'src/libs/utils/storage.util';
 import { productService } from 'src/service/product';
 import { IModifyProduct, IProduct } from 'src/service/product/product.type';
@@ -86,4 +87,4 @@ const EditProduct = () => {
     );
 };
 
-export default EditProduct;
+export default withProtectedPage(EditProduct);

@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import {
     Button,
     CardBody,
@@ -18,6 +18,8 @@ import { ISignIn } from 'src/service/auth/auth.type';
 
 const SignIn = () => {
     const { isSignInLoading, onSignIn } = useAuthHook();
+
+    const { push } = useHistory();
 
     const { ...methods } = useForm({
         resolver: yupResolver(signInSchema),
@@ -90,15 +92,16 @@ const SignIn = () => {
                     </CardBody>
                 </div>
                 <Row className='mt-3'>
-                    {/* <Col xs='6'>
-                        <a
+                    <Col xs='6'>
+                        <span
                             className='text-light'
-                            href='#pablo'
-                            onClick={(e) => e.preventDefault()}
+                            onClick={(e) => {
+                                push(PAGE_URLS.FORGOT_PASSWORD);
+                            }}
                         >
                             <small>Forgot password?</small>
-                        </a>
-                    </Col> */}
+                        </span>
+                    </Col>
                     <Col className='text-right' xs='6'>
                         <Link to={PAGE_URLS.SIGN_UP} className='text-light'>
                             <small>Create new account</small>

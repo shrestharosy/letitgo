@@ -9,6 +9,8 @@ import SignUpPage from './routes/signup';
 import SignOutPage from './routes/signout';
 import AddProduct from './routes/product/add';
 import EditProduct from './routes/product/edit';
+import ForgotPasswordPage from './routes/forgotPassword';
+import ResetPassword from './routes/resetPassword';
 
 interface IRoute {
     path: string;
@@ -31,6 +33,16 @@ const routes: Array<IRoute> = [
         path: PAGE_URLS.SIGN_OUT,
         exact: true,
         component: <SignOutPage />,
+    },
+    {
+        path: PAGE_URLS.FORGOT_PASSWORD,
+        exact: true,
+        component: <ForgotPasswordPage />,
+    },
+    {
+        path: PAGE_URLS.RESET_PASSWORD,
+        exact: true,
+        component: <ResetPassword />,
     },
     {
         path: PAGE_URLS.HOME,

@@ -34,7 +34,34 @@ const signIn = async (data: ISignIn) => {
     return response.data;
 };
 
+const requestCodeForPasswordReset = async (email: string) => {
+    const response: AxiosResponse<ISignInResponse> = await axiosInstance.post(
+        `auth/password/reset/`,
+        { email }
+    );
+    return response.data;
+};
+
+const verifyResetCode = async (token: string) => {
+    const response: AxiosResponse<ISignInResponse> = await axiosInstance.post(
+        `auth/password/reset/validate_token/`,
+        { token }
+    );
+    return response.data;
+};
+
+const resetPassword = async (token: string, password: string) => {
+    const response: AxiosResponse<ISignInResponse> = await axiosInstance.post(
+        `auth/password/reset/confirm/`,
+        { token, password }
+    );
+    return response.data;
+};
+
 export const authService = {
     signUp,
     signIn,
+    requestCodeForPasswordReset,
+    verifyResetCode,
+    resetPassword,
 };
